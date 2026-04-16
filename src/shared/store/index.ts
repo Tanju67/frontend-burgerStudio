@@ -1,12 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { authApi } from "../services/authApi";
+import { rtkQueryErrorLogger } from "./errorMiddleware";
 
 const store = configureStore({
   reducer: {
     [authApi.reducerPath]: authApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(authApi.middleware),
+    getDefaultMiddleware()
+      .concat(authApi.middleware)
+      .concat(rtkQueryErrorLogger),
 });
 
 export default store;
