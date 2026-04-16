@@ -1,0 +1,140 @@
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@300..900&family=Manrope:wght@200..800&display=swap");
+
+@import "tailwindcss";
+@plugin "daisyui";
+
+@theme {
+  --font-primary: "Manrope", sans-serif;
+  --font-secondary: "Outfit", sans-serif;
+
+  --color-bg: #fff;
+  --color-text-light: #eee;
+  --color-text-dark: #333;
+  --color-text-nav: #5e6060;
+  --color-text-hover: #1f2937;
+  --color-main-dark: #5e6060;
+  --color-main: #d3d7d7;
+  --color-main-light: #f9fafa;
+  --color-main-btn: #6e026f;
+  --color-main-btn-hover: #4d014e;
+  --color-secondary-btn: #c70039;
+  --color-secondary-btn-hover: #b30033;
+}
+
+.dark {
+  --color-bg: #494d48;
+  --color-text-light: #eee;
+  --color-text-dark: #eee;
+  --color-text-nav: #fff;
+  --color-main-dark: #8d908d;
+  --color-main: #323731;
+  --color-main-light: #1b211a;
+  --color-main-btn: #48a111;
+  --color-main-btn-hover: #6db441;
+  --color-secondary-btn: #c70039;
+  --color-secondary-btn-hover: #b30033;
+}
+
+body {
+  font-family: var(--font-primary);
+  color: var(--color-text);
+  background-color: var(--color-bg);
+
+  transition:
+    background-color 0.3s ease-in-out,
+    color 0.3s ease-in-out;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-secondary);
+  font-weight: 700;
+}
+
+a {
+  font-family: var(--font-secondary);
+  font-weight: 400;
+}
+
+.container-box {
+  @apply mx-auto max-w-7xl px-4;
+}
+
+.responsive-text {
+  @apply text-sm md:text-base;
+}
+
+.responsive-heading {
+  @apply text-center text-lg font-bold md:text-2xl;
+}
+
+.navlink {
+  @apply hover:text-text-light hover:bg-main-dark flex items-center gap-1 px-2 py-1 transition-colors duration-300 ease-in-out;
+}
+
+.table-zebra tbody tr:nth-child(odd) {
+  color: var(--color-text-dark);
+  background: var(--color-main);
+}
+
+.table-zebra tbody tr:nth-child(even) {
+  color: #000;
+}
+
+/* HAMBURGER MENU */
+.hamburger {
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  transition: all 0.25s;
+  position: relative;
+}
+
+.hamburger-top,
+.hamburger-middle,
+.hamburger-bottom {
+  content: "";
+  position: absolute;
+  width: 24px;
+  height: 3px;
+  top: 0;
+  left: 0;
+  background: var(--color-main-dark);
+  transform: rotate(0);
+  transition: all 0.5s;
+}
+
+.hamburger-middle {
+  transform: translateY(7px);
+}
+
+.hamburger-bottom {
+  transform: translateY(14px);
+  background: var(--color-main-dark);
+}
+
+.open {
+  transform: rotate(90deg);
+  transform: translateY(0px);
+  /* position: fixed;
+  top: 25px;
+  right: 25px; */
+}
+
+.open .hamburger-top {
+  transform: rotate(45deg) translateY(6px) translateX(6px);
+  background-color: var(--color-main-dark);
+}
+
+.open .hamburger-middle {
+  display: none;
+}
+
+.open .hamburger-bottom {
+  transform: rotate(-45deg) translateY(6px) translateX(-6px);
+  background-color: var(--color-main-dark);
+}
