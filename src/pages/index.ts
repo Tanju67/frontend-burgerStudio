@@ -1,0 +1,12 @@
+export { default as AdminPage } from "./AdminPage";
+export { default as AdminOrderPage } from "./AdminOrderPage";
+export { default as BoardMenuPage } from "./BoardMenuPage";
+export { default as BoardProductPage } from "./BoardProductPage";
+export { default as ErrorPage } from "./ErrorPage";
+export { default as HomePage } from "./HomePage";
+export { default as LoginPage } from "./LoginPage";
+export { default as MenuDetailPage } from "./MenuDetailPage";
+export { default as MenuPage } from "./MenuPage";
+export { default as MenuProductsPage } from "./MenuProductsPage";
+export { default as OrderHistoryPage } from "./OrderHistoryPage";
+export { default as RegisterPage } from "./RegisterPage";
