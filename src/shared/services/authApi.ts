@@ -1,19 +1,7 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { baseApi } from "./baseApi";
 
-export const authApi = createApi({
-  reducerPath: "authApi",
-  baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:10000/api/v1",
-    prepareHeaders: (headers) => {
-      const token = localStorage.getItem("token");
-      if (token) {
-        headers.set("authorization", `Bearer ${token}`);
-      }
-      return headers;
-    },
-  }),
-  tagTypes: ["User", "Product", "Menu", "Order"],
+export const authApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({}),
 });
 
-// export const {} = authApi;
+export const {} = authApi;
