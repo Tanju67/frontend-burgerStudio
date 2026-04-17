@@ -5,6 +5,7 @@ import logoDark from "../../../assets/logo-dark.png";
 import logoLight from "../../../assets/logo-light.png";
 import MobileMenuList from "./MobileMenuList";
 import ToggleButton from "./ToggleButton";
+import useDarkMode from "../../hooks/useDarkMode";
 
 type MobileNavProps = {
   title: string | boolean;
@@ -13,7 +14,7 @@ type MobileNavProps = {
 
 function MobileNav({ title, logout }: MobileNavProps) {
   const [hamburger, setHamburger] = useState(false);
-  const darkMode = false;
+  const { darkMode } = useDarkMode();
 
   return (
     <nav className={`bg-bg fixed top-0 z-30 w-full md:hidden`}>

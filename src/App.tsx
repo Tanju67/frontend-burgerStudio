@@ -15,6 +15,8 @@ import {
   RegisterPage,
 } from "./pages";
 import RootLayout from "./pages/RootLayout";
+import { useEffect } from "react";
+import useDarkMode from "./shared/hooks/useDarkMode";
 
 const router = createBrowserRouter([
   {
@@ -89,6 +91,17 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
+  const { darkMode } = useDarkMode();
+
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+    }
+  }, [darkMode]);
   return <RouterProvider router={router} />;
 }
 

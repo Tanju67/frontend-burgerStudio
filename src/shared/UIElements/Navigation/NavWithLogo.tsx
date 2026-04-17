@@ -7,9 +7,10 @@ import logoDark from "../../../assets/logo-dark.png";
 import logoLight from "../../../assets/logo-light.png";
 
 import Button from "../button/Button";
+import useDarkMode from "../../hooks/useDarkMode";
 
 function NavWithLogo({ scrolled }: { scrolled: boolean }) {
-  const darkMode = false;
+  const { darkMode, toggleDarkMode } = useDarkMode();
   return (
     <motion.div
       animate={{ height: scrolled ? 60 : 140 }}
@@ -59,6 +60,7 @@ function NavWithLogo({ scrolled }: { scrolled: boolean }) {
 
           <Button
             type="button"
+            onClick={toggleDarkMode}
             className="hover:bg-main-btn hover:text-text-light! text-text-dark! ml-4 p-1"
           >
             {darkMode ? <MdLightMode /> : <MdDarkMode />}

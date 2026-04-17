@@ -10,9 +10,10 @@ import {
   MdWorkHistory,
 } from "react-icons/md";
 import { RiLogoutBoxFill } from "react-icons/ri";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import logoDark from "../../../assets/logo-dark.png";
 import logoLight from "../../../assets/logo-light.png";
+import useDarkMode from "../../hooks/useDarkMode";
 import { useGetCurrentUserQuery } from "../../services/authApi";
 
 type MobileMenuListProps = {
@@ -26,11 +27,9 @@ function MobileMenuList({
   setHamburger,
   logout,
 }: MobileMenuListProps) {
-  const navigate = useNavigate();
   const { data } = useGetCurrentUserQuery();
-  console.log(data);
 
-  const darkMode = false;
+  const { darkMode, toggleDarkMode } = useDarkMode();
   const isAdmin = data?.role === "admin" || data?.role === "test-admin";
   const isUser = data?.role === "user";
   const isLoggedIn = data !== undefined;
@@ -159,7 +158,10 @@ function MobileMenuList({
         )}
         |
         <li onClick={() => setHamburger(false)}>
-          <button className="flex items-center gap-1 transition-all duration-300 ease-in-out hover:text-white">
+          <button
+            onClick={toggleDarkMode}
+            className="flex items-center gap-1 transition-all duration-300 ease-in-out hover:text-white"
+          >
             <span>{darkMode ? <MdLightMode /> : <MdDarkMode />}</span>
             <span>{darkMode ? "Light" : "Dark"}</span>
           </button>
