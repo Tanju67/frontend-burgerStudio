@@ -1,5 +1,5 @@
-import type { RegisterFormData } from "../schemas/authSchemas";
-import type { RegisterResponse } from "../types/types";
+import type { LoginFormData, RegisterFormData } from "../schemas/authSchemas";
+import type { LoginResponse, RegisterResponse } from "../types/types";
 import { baseApi } from "./baseApi";
 
 export const authApi = baseApi.injectEndpoints({
@@ -12,7 +12,16 @@ export const authApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["User"],
     }),
+
+    login: builder.mutation<LoginResponse, LoginFormData>({
+      query: (userData) => ({
+        url: "/auth/login",
+        method: "POST",
+        body: userData,
+      }),
+      invalidatesTags: ["User"],
+    }),
   }),
 });
 
-export const { useRegisterMutation } = authApi;
+export const { useRegisterMutation, useLoginMutation } = authApi;
