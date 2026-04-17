@@ -7,6 +7,21 @@ export const rtkQueryErrorLogger: Middleware =
       const status = action.payload?.status;
       const endpointName = action.meta?.arg?.endpointName;
 
+      // 1. NETWORK & CONNECTION ERRORS (e.g., MongoDB IP issues)
+      if (status === "FETCH_ERROR") {
+        toaster(
+          "error",
+          "Server connection failed. Please check your internet or database access.",
+        );
+        return next(action);
+      }
+
+      // 2. TIMEOUT ERRORS
+      if (status === "TIMEOUT_ERROR") {
+        toaster("error", "Request timed out. The server is not responding.");
+        return next(action);
+      }
+
       const message =
         action.payload?.data?.message || "An unexpected error occurred";
 
