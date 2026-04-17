@@ -151,7 +151,7 @@ function RegisterForm() {
 
               <Button
                 type="submit"
-                className="bg-main-btn w-full p-2"
+                className="bg-main-btn flex w-full items-center justify-center p-2"
                 disabled={isLoading}
               >
                 {isLoading ? (

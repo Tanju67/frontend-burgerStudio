@@ -14,20 +14,18 @@ import {
 import { useLoginMutation } from "../../shared/services/authApi";
 import Button from "../../shared/UIElements/button/Button";
 import Spinner from "../../shared/UIElements/spinner/Spinner";
-import { toaster } from "../../shared/UIElements/toaster/toaster";
+import { toaster } from "../../shared/utils/toaster";
 
 function Form() {
   const [showPassword, setShowPassword] = useState(false);
+  const [clickedBtn, setClickedBtn] = useState("");
   const navigate = useNavigate();
 
-  // RTK Query Mutation Hook
-  const [registerUser, { isLoading }] = useLoginMutation();
+  const [loginUser, { isLoading }] = useLoginMutation();
 
-  // React Hook Form Configuration
   const {
     register,
     handleSubmit,
-    setValue,
     formState: { errors },
   } = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
@@ -37,13 +35,15 @@ function Form() {
   // Form Submit Handler
   const onSubmit: SubmitHandler<LoginFormData> = async (values) => {
     try {
-      const response = await registerUser(values).unwrap();
+      const response = await loginUser(values).unwrap();
       localStorage.setItem("token", response.token);
       toaster("success", response.message);
 
       setTimeout(() => navigate("/"), 2000);
     } catch (err: unknown) {
       console.log(err);
+    } finally {
+      setClickedBtn("");
     }
   };
 
@@ -52,7 +52,7 @@ function Form() {
       user: { email: "user@test.com", password: "secret123" },
       admin: { email: "test-admin@mail.com", password: "secret123" },
     };
-
+    setClickedBtn(role);
     await onSubmit(credentials[role]);
   };
 
@@ -132,10 +132,11 @@ function Form() {
 
               <Button
                 type="submit"
-                className="bg-main-btn hover:bg-main-btn-hover w-full p-2"
+                className="bg-main-btn hover:bg-main-btn-hover flex w-full items-center justify-center p-2"
                 disabled={isLoading}
+                onClick={() => setClickedBtn("login")}
               >
-                {isLoading ? (
+                {isLoading && clickedBtn === "login" ? (
                   <>
                     <Spinner />
                     Loading...
@@ -149,9 +150,9 @@ function Form() {
                   type="button"
                   disabled={isLoading}
                   onClick={() => handleDemoLogin("user")}
-                  className="w-[49%] bg-blue-600 p-2 text-xs text-white hover:bg-blue-700 md:text-sm lg:text-base"
+                  className="flex w-[49%] items-center justify-center bg-blue-600 p-2 text-xs text-white hover:bg-blue-700 md:text-sm lg:text-base"
                 >
-                  {isLoading ? (
+                  {isLoading && clickedBtn === "user" ? (
                     <>
                       <Spinner />
                       Loading...
@@ -164,9 +165,9 @@ function Form() {
                   type="button"
                   disabled={isLoading}
                   onClick={() => handleDemoLogin("admin")}
-                  className="bg-secondary-btn hover:bg-secondary-btn-hover w-[49%] p-2 text-xs"
+                  className="bg-secondary-btn hover:bg-secondary-btn-hover flex w-[49%] items-center justify-center p-2 text-xs"
                 >
-                  {isLoading ? (
+                  {isLoading && clickedBtn === "admin" ? (
                     <>
                       <Spinner />
                       Loading...
