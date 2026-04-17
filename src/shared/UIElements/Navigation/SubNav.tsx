@@ -4,14 +4,20 @@ import { FaPersonCirclePlus } from "react-icons/fa6";
 import { IoArrowBackOutline, IoLogInSharp } from "react-icons/io5";
 import { MdDashboardCustomize, MdWorkHistory } from "react-icons/md";
 import { RiLogoutBoxFill } from "react-icons/ri";
-import NavLinkListItem from "./NavLinkListItem";
 import { NavLink, useNavigate } from "react-router-dom";
-import type { MainNavProps } from "./MainNav";
+import { useGetCurrentUserQuery } from "../../services/authApi";
+import NavLinkListItem from "./NavLinkListItem";
 
-function SubNav({ title }: MainNavProps) {
-  const isAdmin = false;
-  const isUser = false;
-  const isLoggedIn = false;
+type SubNavProps = {
+  title: string | boolean;
+  logout: () => void;
+};
+
+function SubNav({ title, logout }: SubNavProps) {
+  const { data } = useGetCurrentUserQuery();
+  const isAdmin = data?.role === "admin" || data?.role === "test-admin";
+  const isUser = data?.role === "user";
+  const isLoggedIn = data !== undefined;
   const navigate = useNavigate();
   if (typeof title == "string") {
     return (
@@ -69,7 +75,7 @@ function SubNav({ title }: MainNavProps) {
             title="Logout"
             isButton={true}
             onClick={() => {
-              navigate(0);
+              logout();
             }}
           >
             <RiLogoutBoxFill />

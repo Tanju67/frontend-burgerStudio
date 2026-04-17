@@ -19,3 +19,5 @@ export const authUserSchema = z.object({
   _id: z.string(),
   role: z.string(),
 });
+
+export type AuthUser = z.infer<typeof authUserSchema>;

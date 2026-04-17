@@ -13,18 +13,27 @@ import { RiLogoutBoxFill } from "react-icons/ri";
 import { NavLink, useNavigate } from "react-router-dom";
 import logoDark from "../../../assets/logo-dark.png";
 import logoLight from "../../../assets/logo-light.png";
+import { useGetCurrentUserQuery } from "../../services/authApi";
 
 type MobileMenuListProps = {
   hamburger: boolean;
   setHamburger: React.Dispatch<React.SetStateAction<boolean>>;
+  logout: () => void;
 };
 
-function MobileMenuList({ hamburger, setHamburger }: MobileMenuListProps) {
+function MobileMenuList({
+  hamburger,
+  setHamburger,
+  logout,
+}: MobileMenuListProps) {
   const navigate = useNavigate();
+  const { data } = useGetCurrentUserQuery();
+  console.log(data);
+
   const darkMode = false;
-  const isAdmin = false;
-  const isUser = false;
-  const isLoggedIn = false;
+  const isAdmin = data?.role === "admin" || data?.role === "test-admin";
+  const isUser = data?.role === "user";
+  const isLoggedIn = data !== undefined;
   return (
     <motion.div
       className="bg-bg fixed top-0 right-0 z-40 flex h-screen w-full flex-col items-center justify-center gap-2 text-xl capitalize"
@@ -134,7 +143,7 @@ function MobileMenuList({ hamburger, setHamburger }: MobileMenuListProps) {
           <li
             onClick={() => {
               setHamburger(false);
-              navigate(0);
+              logout();
             }}
           >
             <NavLink

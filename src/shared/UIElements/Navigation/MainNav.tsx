@@ -1,4 +1,7 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { baseApi } from "../../services/baseApi";
+import { useAppDispatch } from "../../store/hooks";
 import MobileNav from "./MobileNav";
 import NavWithLogo from "./NavWithLogo";
 import SubNav from "./SubNav";
@@ -10,6 +13,14 @@ export type MainNavProps = {
 
 function MainNav({ title, admin }: MainNavProps) {
   const [scrolled, setScrolled] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  const logout = () => {
+    localStorage.removeItem("token");
+    dispatch(baseApi.util.resetApiState());
+    navigate("/login");
+  };
 
   useEffect(() => {
     let ticking = false;
@@ -37,9 +48,9 @@ function MainNav({ title, admin }: MainNavProps) {
         }`}
       >
         {!admin && <NavWithLogo scrolled={scrolled} />}
-        <SubNav title={title} />
+        <SubNav title={title} logout={logout} />
       </nav>
-      <MobileNav title={title} />
+      <MobileNav logout={logout} title={title} />
     </>
   );
 }

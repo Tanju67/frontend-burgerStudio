@@ -3,11 +3,15 @@ import { IoArrowBackOutline } from "react-icons/io5";
 import { NavLink } from "react-router-dom";
 import logoDark from "../../../assets/logo-dark.png";
 import logoLight from "../../../assets/logo-light.png";
-import type { MainNavProps } from "./MainNav";
 import MobileMenuList from "./MobileMenuList";
 import ToggleButton from "./ToggleButton";
 
-function MobileNav({ title }: MainNavProps) {
+type MobileNavProps = {
+  title: string | boolean;
+  logout: () => void;
+};
+
+function MobileNav({ title, logout }: MobileNavProps) {
   const [hamburger, setHamburger] = useState(false);
   const darkMode = false;
 
@@ -26,7 +30,11 @@ function MobileNav({ title }: MainNavProps) {
         <div>
           <ToggleButton hamburger={hamburger} setHamburger={setHamburger} />
         </div>
-        <MobileMenuList hamburger={hamburger} setHamburger={setHamburger} />
+        <MobileMenuList
+          hamburger={hamburger}
+          setHamburger={setHamburger}
+          logout={logout}
+        />
       </div>
       {!title && (
         <div className="text-bpld bg-main px-4 py-2 text-center text-xl uppercase">
