@@ -1,5 +1,7 @@
+import MenuDetail from "../components/menuDetail/MenuDetail";
+
 function MenuDetailPage() {
-  return <div>MenuDetailPage</div>;
+  return <MenuDetail />;
 }
 
 export default MenuDetailPage;
