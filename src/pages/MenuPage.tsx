@@ -1,5 +1,7 @@
+import Menu from "../components/menu/Menu";
+
 function MenuPage() {
-  return <div>MenuPage</div>;
+  return <Menu />;
 }
 
 export default MenuPage;
