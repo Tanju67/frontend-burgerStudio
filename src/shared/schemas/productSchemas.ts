@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { menuSchema } from "./menuSchemas";
 
 export const productSchema = z.object({
   _id: z.string(),
@@ -7,7 +6,10 @@ export const productSchema = z.object({
   description: z.string().optional(),
   price: z.number(),
   image: z.string().url().optional(),
-  menu: menuSchema.optional(),
+  menu: z.union([
+    z.string(),
+    z.object({ _id: z.string(), title: z.string() }).passthrough(),
+  ]),
   amount: z.number().optional(),
 });
 
