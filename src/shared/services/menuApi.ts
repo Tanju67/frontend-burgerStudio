@@ -23,7 +23,13 @@ export const menuApi = baseApi.injectEndpoints({
         }
         return result.data;
       },
-      providesTags: ["Menu"],
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.map(({ _id }) => ({ type: "Menu" as const, id: _id })),
+              { type: "Menu", id: "LIST" },
+            ]
+          : [{ type: "Menu", id: "LIST" }],
     }),
 
     createMenu: builder.mutation<AddMenu, FormData>({
@@ -32,7 +38,7 @@ export const menuApi = baseApi.injectEndpoints({
         method: "POST",
         body: formData,
       }),
-      invalidatesTags: ["Menu"],
+      invalidatesTags: [{ type: "Menu", id: "LIST" }],
     }),
 
     updateMenu: builder.mutation<
@@ -44,7 +50,10 @@ export const menuApi = baseApi.injectEndpoints({
         method: "PATCH",
         body: formData,
       }),
-      invalidatesTags: ["Menu"],
+      invalidatesTags: (_result, _error, { id }) => [
+        { type: "Menu", id },
+        { type: "Menu", id: "LIST" },
+      ],
     }),
 
     deleteMenu: builder.mutation({
@@ -52,7 +61,10 @@ export const menuApi = baseApi.injectEndpoints({
         url: `/menu/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["Menu"],
+      invalidatesTags: (_result, _error, id) => [
+        { type: "Menu", id },
+        { type: "Menu", id: "LIST" },
+      ],
     }),
   }),
 });
