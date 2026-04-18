@@ -3,6 +3,7 @@ import Footer from "../shared/UIElements/footer/Footer";
 import Modal from "../shared/UIElements/modal/Modal";
 import useCart from "../shared/hooks/useCart";
 import Cart from "../components/menuDetail/Cart";
+import ScrollToTop from "../shared/utils/ScrollToTop";
 
 function RootLayout() {
   const { cart, setCartModal } = useCart();
@@ -10,6 +11,7 @@ function RootLayout() {
     <div>
       <main className="font-primary flex min-h-screen flex-col scroll-smooth">
         <div className="flex-1 antialiased md:pt-47.5">
+          <ScrollToTop />
           <Outlet />
         </div>
         <Footer />
