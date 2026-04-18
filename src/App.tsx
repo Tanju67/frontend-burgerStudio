@@ -17,6 +17,7 @@ import {
 import RootLayout from "./pages/RootLayout";
 import { useEffect } from "react";
 import useDarkMode from "./shared/hooks/useDarkMode";
+import ProtectedRoute from "./shared/UIElements/protectedRoute/ProtectedRoute";
 
 const router = createBrowserRouter([
   {
@@ -48,11 +49,19 @@ const router = createBrowserRouter([
       },
       {
         path: "order-history",
-        element: <OrderHistoryPage />,
+        element: (
+          <ProtectedRoute role="user">
+            <OrderHistoryPage />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "dashboard",
-        element: <AdminPage />,
+        element: (
+          <ProtectedRoute role="admin">
+            <AdminPage />
+          </ProtectedRoute>
+        ),
 
         children: [
           {
