@@ -1,4 +1,5 @@
 import { Outlet } from "react-router-dom";
+import Footer from "../shared/UIElements/footer/Footer";
 
 function RootLayout() {
   return (
@@ -7,6 +8,7 @@ function RootLayout() {
         <div className="flex-1 antialiased md:pt-47.5">
           <Outlet />
         </div>
+        <Footer />
       </main>
     </div>
   );
