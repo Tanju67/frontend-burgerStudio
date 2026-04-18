@@ -1,10 +1,10 @@
 import { useState } from "react";
 
 import useCart from "../../shared/hooks/useCart";
+import type { Product } from "../../shared/schemas/productSchemas";
 import Modal from "../../shared/UIElements/modal/Modal";
 import MenuDetailListItem from "./MenuDetailListItem";
 import ProductInfo from "./ProductInfo";
-import type { Product } from "../../shared/schemas/productSchemas";
 
 interface MenuDetailListProps {
   data: Product[];

@@ -8,9 +8,15 @@ import logoLight from "../../../assets/logo-light.png";
 
 import Button from "../button/Button";
 import useDarkMode from "../../hooks/useDarkMode";
+import useCart from "../../hooks/useCart";
+import { useSelector } from "react-redux";
+import { selectTotalPrice } from "../../store/CartSlice";
+import { formatPrice } from "../../utils/helper";
 
 function NavWithLogo({ scrolled }: { scrolled: boolean }) {
+  const { cart, setCartModal } = useCart();
   const { darkMode, toggleDarkMode } = useDarkMode();
+  const totalPrice = useSelector(selectTotalPrice);
   return (
     <motion.div
       animate={{ height: scrolled ? 60 : 140 }}
@@ -37,7 +43,7 @@ function NavWithLogo({ scrolled }: { scrolled: boolean }) {
           </Link>
         </div>
         <div className="flex items-center justify-center">
-          {[].length === 0 && (
+          {cart.cartData.length === 0 && (
             <NavLink
               to="/menu"
               className="hover:bg-main-btn-hover bg-main-btn text-text-light flex items-center gap-1 px-4 py-2 font-light! transition-all duration-300 ease-in-out"
@@ -48,13 +54,18 @@ function NavWithLogo({ scrolled }: { scrolled: boolean }) {
               <span> Order Online</span>
             </NavLink>
           )}
-          {[].length > 0 && (
-            <div className="hover:bg-main-btn flex items-center gap-1 px-4 py-2 font-light! transition-all duration-300 ease-in-out hover:text-white">
+          {cart.cartData.length > 0 && (
+            <div
+              onClick={() => setCartModal(true)}
+              className="hover:bg-main-btn flex items-center gap-1 px-4 py-2 font-light! transition-all duration-300 ease-in-out hover:text-white"
+            >
               <span>
                 <FaCartPlus />
               </span>
               <span> Cart</span>
-              <span className="bg-main-btn rounded-sm p-1 text-white">x</span>
+              <span className="bg-main-btn rounded-sm p-1 text-white">
+                {formatPrice(totalPrice)}
+              </span>
             </div>
           )}
 

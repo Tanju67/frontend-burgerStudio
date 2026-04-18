@@ -17,6 +17,7 @@ function MenuDetailListItem({
   const { setCartModal, setProduct, addToCart, setActiveCart } = useCart();
   const { data: user } = useGetCurrentUserQuery();
   const navigate = useNavigate();
+  console.log(user);
 
   const product: Product & { amount: number } = {
     _id,
@@ -28,7 +29,7 @@ function MenuDetailListItem({
   };
 
   const handleSelectProduct = () => {
-    if (user === null || user!.role === "admin") {
+    if (user === undefined || user?.role === "admin") {
       navigate("/login");
       return;
     }
