@@ -4,46 +4,63 @@ import { dashboardActions } from "../store/DashboardSlice";
 import type { Menu } from "../schemas/menuSchemas";
 import type { OrderItem } from "../schemas/orderSchemas";
 import type { Product } from "../schemas/productSchemas";
+import { useCallback } from "react";
 
 function useDashboard() {
   const dispatch = useDispatch<AppDispatch>();
-
   const dashboard = useSelector((state: RootState) => state.dashboard);
 
-  const setMenuActiveTab = (tab: number) => {
-    dispatch(dashboardActions.setMenuActiveTab(tab));
-  };
+  const setMenuActiveTab = useCallback(
+    (tab: number) => {
+      dispatch(dashboardActions.setMenuActiveTab(tab));
+    },
+    [dispatch],
+  );
 
-  const openMenuModal = (menu: Menu | null) => {
-    dispatch(dashboardActions.openMenuModal(menu));
-  };
+  const openMenuModal = useCallback(
+    (menu: Menu | null) => {
+      dispatch(dashboardActions.openMenuModal(menu));
+    },
+    [dispatch],
+  );
 
-  const closeMenuModal = () => {
+  const closeMenuModal = useCallback(() => {
     dispatch(dashboardActions.closeMenuModal());
-  };
+  }, [dispatch]);
 
-  const openOrderDetailModal = (order: OrderItem[]) => {
-    dispatch(dashboardActions.openOrderDetailModal(order));
-  };
-  const closeOrderDetailModal = () => {
+  const openOrderDetailModal = useCallback(
+    (order: OrderItem[]) => {
+      dispatch(dashboardActions.openOrderDetailModal(order));
+    },
+    [dispatch],
+  );
+
+  const closeOrderDetailModal = useCallback(() => {
     dispatch(dashboardActions.closeOrderDetailModal());
-  };
+  }, [dispatch]);
 
-  const openProductModal = (product: Product | null) => {
-    dispatch(dashboardActions.openProductModal(product));
-  };
+  const openProductModal = useCallback(
+    (product: Product | null) => {
+      dispatch(dashboardActions.openProductModal(product));
+    },
+    [dispatch],
+  );
 
-  const closeProductModal = () => {
+  const closeProductModal = useCallback(() => {
     dispatch(dashboardActions.closeProductModal());
-  };
+  }, [dispatch]);
 
-  const openOrderStatusModal = (orderId: string) => {
-    dispatch(dashboardActions.openOrderStatusModal(orderId));
-  };
+  const openOrderStatusModal = useCallback(
+    (orderId: string) => {
+      dispatch(dashboardActions.openOrderStatusModal(orderId));
+    },
+    [dispatch],
+  );
 
-  const closeOrderStatusModal = () => {
+  const closeOrderStatusModal = useCallback(() => {
     dispatch(dashboardActions.closeOrderStatusModal());
-  };
+  }, [dispatch]);
+
   return {
     dashboard,
     setMenuActiveTab,

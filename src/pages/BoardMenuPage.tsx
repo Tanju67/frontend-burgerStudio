@@ -1,5 +1,7 @@
+import BoardMenu from "../components/boardMenu/BoardMenu";
+
 function BoardMenuPage() {
-  return <div>BoardMenuPage</div>;
+  return <BoardMenu />;
 }
 
 export default BoardMenuPage;
