@@ -2,9 +2,11 @@ import type React from "react";
 import { Navigate } from "react-router-dom";
 import { useGetCurrentUserQuery } from "../../services/authApi";
 
+type UserRole = "user" | "admin" | "test-admin";
+
 type ProtectedRouteProps = {
   children: React.ReactNode;
-  role: string;
+  role: UserRole[];
 };
 
 const ProtectedRoute = ({ children, role }: ProtectedRouteProps) => {
@@ -22,7 +24,9 @@ const ProtectedRoute = ({ children, role }: ProtectedRouteProps) => {
     return <Navigate to="/login" replace />;
   }
 
-  if (authUser.role !== role) {
+  const hasAccess = role.includes(authUser.role as UserRole);
+
+  if (!hasAccess) {
     return <Navigate to="/unauthorized" replace />;
   }
 

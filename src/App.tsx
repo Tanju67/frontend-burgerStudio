@@ -50,7 +50,7 @@ const router = createBrowserRouter([
       {
         path: "order-history",
         element: (
-          <ProtectedRoute role="user">
+          <ProtectedRoute role={["user"]}>
             <OrderHistoryPage />
           </ProtectedRoute>
         ),
@@ -58,7 +58,7 @@ const router = createBrowserRouter([
       {
         path: "dashboard",
         element: (
-          <ProtectedRoute role="admin">
+          <ProtectedRoute role={["admin", "test-admin"]}>
             <AdminPage />
           </ProtectedRoute>
         ),
