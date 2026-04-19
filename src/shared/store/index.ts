@@ -1,14 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
-import cartReducer from "./CartSlice";
-
-import { rtkQueryErrorLogger } from "./errorMiddleware";
 import { baseApi } from "../services/baseApi";
+import cartReducer from "./CartSlice";
 import darkModeReducer from "./DarkModeSlice";
+import dashboardReucer from "./DashboardSlice";
 import { cartListenerMiddleware } from "./cartListener";
+import { rtkQueryErrorLogger } from "./errorMiddleware";
 
 const store = configureStore({
   reducer: {
     cart: cartReducer,
+    dashboard: dashboardReucer,
     darkMode: darkModeReducer,
     [baseApi.reducerPath]: baseApi.reducer,
   },
