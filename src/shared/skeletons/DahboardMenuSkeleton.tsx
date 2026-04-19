@@ -2,15 +2,20 @@ import { useSelector } from "react-redux";
 import { cn } from "../../shared/utils/cn";
 import type { RootState } from "../../shared/store";
 
-function DashboardMenuSkeleton() {
+function DashboardMenuSkeleton({
+  layout,
+  lenght,
+}: {
+  layout?: string;
+  lenght?: number;
+}) {
   const { menuActiveTab } = useSelector((state: RootState) => state.dashboard);
 
-  const isGrid = menuActiveTab === 0;
-  const isList = menuActiveTab === 1;
-  const isImage = menuActiveTab === 2;
+  const isGrid = layout ? layout === "grid" : menuActiveTab === 0;
+  const isList = layout ? layout === "list" : menuActiveTab === 1;
+  const isImage = layout ? layout === "image" : menuActiveTab === 2;
 
-  // 6 adet skeleton kutusu oluşturuyoruz
-  const skeletonItems = Array.from({ length: 6 });
+  const skeletonItems = Array.from({ length: lenght || 6 });
 
   return (
     <div

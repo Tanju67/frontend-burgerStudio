@@ -1,5 +1,7 @@
+import BoardProduct from "../components/boardProduct/BoardProduct";
+
 function BoardProductPage() {
-  return <div>BoardProductPage</div>;
+  return <BoardProduct />;
 }
 
 export default BoardProductPage;

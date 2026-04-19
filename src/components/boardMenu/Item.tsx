@@ -1,12 +1,12 @@
 import { FaEdit } from "react-icons/fa";
 import { MdDeleteForever } from "react-icons/md";
 import useDashboard from "../../shared/hooks/useDahboard";
+import type { Menu } from "../../shared/schemas/menuSchemas";
+import { useGetCurrentUserQuery } from "../../shared/services/authApi";
 import { useDeleteMenuMutation } from "../../shared/services/menuApi";
 import Button from "../../shared/UIElements/button/Button";
 import { cn } from "../../shared/utils/cn";
 import { toaster } from "../../shared/utils/toaster";
-import type { Menu } from "../../shared/schemas/menuSchemas";
-import { useGetCurrentUserQuery } from "../../shared/services/authApi";
 
 function Item(props: Menu) {
   const { _id, title, image } = props;
