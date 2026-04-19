@@ -1,11 +1,10 @@
 import { useEffect } from "react";
 import useDashboard from "../../shared/hooks/useDahboard";
 import { useGetMenusQuery } from "../../shared/services/menuApi";
-import DashboardNav from "../../shared/UIElements/dashboardNav/DashboardNav";
-import PageSpinner from "../../shared/UIElements/spinner/PageSpinner";
-import ProductContent from "./ProductContent";
 import DashboardMenuSkeleton from "../../shared/skeletons/DahboardMenuSkeleton";
 import Button from "../../shared/UIElements/button/Button";
+import DashboardNav from "../../shared/UIElements/dashboardNav/DashboardNav";
+import ProductContent from "./ProductContent";
 
 function BoardProduct() {
   const { setMenuActiveTab } = useDashboard();

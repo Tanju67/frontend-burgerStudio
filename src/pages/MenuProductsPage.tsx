@@ -1,5 +1,7 @@
+import MenuProduct from "../components/menuProduct/MenuProduct";
+
 function MenuProductsPage() {
-  return <div>MenuProductsPage</div>;
+  return <MenuProduct />;
 }
 
 export default MenuProductsPage;
