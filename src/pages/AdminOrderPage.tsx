@@ -1,5 +1,7 @@
+import AdminOrder from "../components/adminOrder/AdminOrder";
+
 function AdminOrderPage() {
-  return <div>AdminOrderPage</div>;
+  return <AdminOrder />;
 }
 
 export default AdminOrderPage;
