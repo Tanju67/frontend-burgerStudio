@@ -10,7 +10,7 @@ type ProtectedRouteProps = {
 };
 
 const ProtectedRoute = ({ children, role }: ProtectedRouteProps) => {
-  const { data: authUser, isLoading, isFetching } = useGetCurrentUserQuery();
+  const { data: authUser, isLoading } = useGetCurrentUserQuery();
 
   if (isLoading) {
     return (
@@ -24,10 +24,11 @@ const ProtectedRoute = ({ children, role }: ProtectedRouteProps) => {
     return <Navigate to="/login" replace />;
   }
 
-  const hasAccess = role.includes(authUser.role as UserRole);
-
-  if (!hasAccess) {
-    return <Navigate to="/unauthorized" replace />;
+  if (role && !role.includes(authUser?.role as UserRole)) {
+    const message = encodeURIComponent(
+      "You are not authorized to view this kitchen!",
+    );
+    return <Navigate to={`/error?status=403&message=${message}`} replace />;
   }
 
   return <>{children}</>;

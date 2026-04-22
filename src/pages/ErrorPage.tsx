@@ -47,7 +47,11 @@ function ErrorPage() {
 
           <div className="space-y-4">
             <h2 className="text-text-dark text-3xl font-black tracking-tighter uppercase italic md:text-5xl">
-              {status === "404" ? "Page Not Found" : "System Error"}
+              {status === "404"
+                ? "Page Not Found"
+                : status === "403"
+                  ? "Access Denied"
+                  : "System Error"}
             </h2>
             <p className="text-main-dark/60 mx-auto max-w-md text-sm font-bold tracking-widest uppercase">
               {message}
