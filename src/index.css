@@ -4,15 +4,19 @@
 @plugin "daisyui";
 @variant dark (&:where(.dark, .dark *));
 
+/* :root {
+  --toastify-color-dark: var(--color-toastify);
+  --toastify-text-color-dark: #ffffff;
+} */
 @theme {
   --font-primary: "Manrope", sans-serif;
   --font-secondary: "Outfit", sans-serif;
 
   --color-bg: #fff;
-  --color-text-light: #eee;
-  --color-text-dark: #333;
-  --color-text-nav: #5e6060;
-  --color-text-hover: #1f2937;
+  --color-text-light: #f8fafc;
+  --color-text-dark: #1a1c1e;
+  --color-text-nav: #4a4d4d;
+  --color-text-hover: #000000;
   --color-main-dark: #5e6060;
   --color-main: #d3d7d7;
   --color-main-light: #f9fafa;
@@ -20,12 +24,13 @@
   --color-main-btn-hover: #4d014e;
   --color-secondary-btn: #c70039;
   --color-secondary-btn-hover: #b30033;
+  --color-toastify: #6e026f;
 }
 
 .dark {
   --color-bg: #494d48;
-  --color-text-light: #eee;
-  --color-text-dark: #eee;
+  --color-text-light: #cbd5e1;
+  --color-text-dark: #f1f5f9;
   --color-text-nav: #fff;
   --color-main-dark: #8d908d;
   --color-main: #323731;
@@ -34,6 +39,7 @@
   --color-main-btn-hover: #6db441;
   --color-secondary-btn: #c70039;
   --color-secondary-btn-hover: #b30033;
+  --color-toastify: #1b211a;
 }
 
 body {
@@ -61,6 +67,17 @@ a {
   font-weight: 400;
 }
 
+@layer utilities {
+  .bg-dashboard-pattern {
+    background-image: radial-gradient(
+      circle at 2px 2px,
+      var(--color-main) 1px,
+      transparent 0
+    );
+    background-size: 32px 32px;
+  }
+}
+
 .container-box {
   @apply mx-auto max-w-7xl px-4;
 }
@@ -75,15 +92,6 @@ a {
 
 .navlink {
   @apply hover:text-text-light hover:bg-main-dark flex items-center gap-1 px-2 py-1 transition-colors duration-300 ease-in-out;
-}
-
-.table-zebra tbody tr:nth-child(odd) {
-  color: var(--color-text-dark);
-  background: var(--color-main);
-}
-
-.table-zebra tbody tr:nth-child(even) {
-  color: #000;
 }
 
 /* HAMBURGER MENU */
@@ -138,4 +146,11 @@ a {
 .open .hamburger-bottom {
   transform: rotate(-45deg) translateY(6px) translateX(-6px);
   background-color: var(--color-main-dark);
+}
+
+@layer base {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-main) transparent;
+  }
 }

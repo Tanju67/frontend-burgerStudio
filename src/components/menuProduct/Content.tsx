@@ -11,25 +11,33 @@ function Content({ data }: ContentProps) {
   const {
     dashboard: { menuActiveTab },
   } = useDashboard();
+
+  // Navigation tabs state logic
   const isGrid = menuActiveTab === 0;
   const isList = menuActiveTab === 1;
   const isImage = menuActiveTab === 2;
+
   if (data.length === 0)
     return (
-      <div className="flex min-h-[90vh] justify-center py-10">
-        <p className="text-center">
-          There is any product. Please add a new product.
-        </p>
+      <div className="flex min-h-[60vh] items-center justify-center px-4 py-10">
+        <div className="bg-main/5 border-main/20 w-full max-w-lg rounded-4xl border-2 border-dashed p-12 text-center">
+          <p className="text-main-btn text-xl font-black tracking-tighter uppercase italic">
+            Kitchen is ready but no burgers found! <br />
+            <span className="text-sm font-bold tracking-normal opacity-60">
+              Start adding some delicious products.
+            </span>
+          </p>
+        </div>
       </div>
     );
+
   return (
     <ul
       className={cn(
-        "py-4 md:max-h-screen",
-        isGrid &&
-          "grid auto-rows-min grid-cols-1 gap-2 min-[465px]:grid-cols-2 xl:grid-cols-3",
-        isList && "flex flex-col gap-2",
-        isImage && "grid auto-rows-min gap-4 sm:grid-cols-2 lg:grid-cols-3",
+        "custom-scrollbar overflow-y-auto px-2 py-6 md:max-h-[calc(100vh-250px)]",
+        isGrid && "grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3",
+        isList && "flex flex-col gap-3",
+        isImage && "grid gap-6 sm:grid-cols-2 lg:grid-cols-3",
       )}
     >
       {data.map((item) => (

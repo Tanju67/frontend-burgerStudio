@@ -6,27 +6,32 @@ import { MdDarkMode, MdLightMode } from "react-icons/md";
 function AdminNav() {
   const { darkMode, toggleDarkMode } = useDarkMode();
   return (
-    <nav className="top-0 right-2 left-2 z-40 rounded-b-lg md:fixed md:pt-2">
-      <div className="bg-main w.full text-text-dark flex rounded-lg px-4 shadow-md md:h-12.5">
-        <div className="flex flex-1 items-center justify-center py-2">
-          <NavLink
-            className="hover:bg-main-dark flex items-center gap-1 rounded-sm p-1 text-sm transition-all duration-300 ease-in-out hover:text-white md:text-base"
-            to={".."}
-          >
-            <IoArrowBackOutline />
-            <span className="hidden md:block">Back</span>
-          </NavLink>
-          <h1 className="flex-1 text-center text-base uppercase md:text-xl">
-            Admin Dashboard
-          </h1>
+    <nav className="fixed top-0 right-0 left-0 z-90 px-2 pt-2">
+      <div className="bg-main/90 text-main-dark flex h-14 items-center rounded-2xl border border-white/20 px-4 shadow-lg backdrop-blur-md">
+        {/* Back Button */}
+        <NavLink
+          className="group bg-main-dark/5 text-main-dark hover:bg-main-btn flex items-center gap-2 rounded-xl px-3 py-1.5 text-sm font-black uppercase italic transition-all hover:text-white"
+          to=".."
+        >
+          <IoArrowBackOutline
+            size={18}
+            className="transition-transform group-hover:-translate-x-1"
+          />
+          <span className="hidden md:block">Back</span>
+        </NavLink>
 
-          <button
-            className="hover:bg-main-btn hover:text-text-light ml-4 rounded-md p-1 transition-all duration-300 ease-in-out"
-            onClick={toggleDarkMode}
-          >
-            {darkMode ? <MdLightMode /> : <MdDarkMode />}
-          </button>
-        </div>
+        {/* Title */}
+        <h1 className="flex-1 text-center text-lg font-black tracking-tighter uppercase italic md:text-2xl">
+          Studio <span className="text-main-btn">Admin</span>
+        </h1>
+
+        {/* Theme Toggle */}
+        <button
+          className="bg-main-dark/5 hover:bg-main-btn flex h-10 w-10 items-center justify-center rounded-xl shadow-inner transition-all hover:text-white"
+          onClick={toggleDarkMode}
+        >
+          {darkMode ? <MdLightMode size={20} /> : <MdDarkMode size={20} />}
+        </button>
       </div>
     </nav>
   );

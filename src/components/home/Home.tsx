@@ -5,7 +5,7 @@ import FixedBg from "./FixedBg";
 
 function Home() {
   return (
-    <main className="text-text-dark">
+    <main className="text-text-dark bg-bg">
       <MainNav title={false} />
       <Banner />
       <AboutUs />

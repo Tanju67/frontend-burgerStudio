@@ -13,7 +13,7 @@ function AdminOrder() {
   return (
     <div>
       <DashboardNav title="Orders" rightSection={true}>
-        <NavItem data={dashboardOrderNavData} />
+        <NavItem data={dashboardOrderNavData} breakPoint={true} />
       </DashboardNav>
 
       <Content />

@@ -7,25 +7,26 @@ type OrderTableItemProps = {
 
 function OrderTableContent({ data }: OrderTableItemProps) {
   return (
-    <table className="table-zebra text-text-dark table">
-      <thead className="bg-base-200">
-        <tr>
-          <th></th>
-          <th>Customer</th>
-          <th>Address</th>
-          <th>Order Date</th>
-          <th>Order Time</th>
-          <th>Order Status</th>
-          <th>Order Total</th>
-          <th>Order Detail</th>
-        </tr>
-      </thead>
-      <tbody>
-        {data.map((order, i) => (
-          <OrderTableItem key={order._id} {...order} index={i} />
-        ))}
-      </tbody>
-    </table>
+    <div className="w-full py-4">
+      {/* Desktop view header - hidden on mobile */}
+      <table className="w-full border-separate border-spacing-y-3">
+        <thead className="bg-main hidden md:table-header-group">
+          <tr className="text-main-btn text-left font-black tracking-tighter uppercase italic">
+            <th className="px-4 py-2">#</th>
+            <th className="px-4 py-2">Customer</th>
+            <th className="px-4 py-2">Address</th>
+            <th className="px-4 py-2">Status</th>
+            <th className="px-4 py-2">Total</th>
+            <th className="px-4 py-2 text-center">Actions</th>
+          </tr>
+        </thead>
+        <tbody className="flex flex-col gap-4 md:table-row-group">
+          {data.map((order, i) => (
+            <OrderTableItem key={order._id} {...order} index={i} />
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 }
 

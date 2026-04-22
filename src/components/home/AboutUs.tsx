@@ -3,53 +3,73 @@ import homeImg3 from "../../assets/homeImg3.jpg";
 
 function AboutUs() {
   return (
-    <div className="container-box py-16 text-sm md:text-base">
-      <h1 className="responsive-heading text-main-btn uppercase">
-        About Burger Studio
-      </h1>
-      <div className="bg-main-light mt-20 grid items-center gap-4 lg:mt-30 lg:grid-cols-2">
-        <div className="relative h-45 w-[90%] md:h-75">
+    <div className="container-box space-y-32 py-24">
+      {/* First Section: Ingredients */}
+      <div className="grid items-center gap-16 md:grid-cols-2">
+        <div className="group relative">
+          {/* Decorative Back Box */}
+          <div className="bg-main/20 absolute -inset-4 -rotate-2 rounded-2xl transition-transform duration-500 group-hover:rotate-0" />
           <img
             src={homeImg2}
-            alt="img"
-            className="absolute -top-8 right-0 bottom-50 left-[5%] h-60 w-full object-cover shadow-xl md:h-90"
+            alt="Fresh Ingredients"
+            className="relative z-10 h-100 w-full rounded-xl object-cover shadow-2xl"
           />
         </div>
 
-        <div className="p-6 md:p-8 lg:px-10">
-          <p>
-            We believe that a great burger starts with the finest ingredients.
+        <div className="space-y-6">
+          <h2 className="text-main-btn text-4xl font-black tracking-tighter uppercase italic md:text-5xl">
+            Quality in Every <br /> Single Bite
+          </h2>
+          <div className="bg-main h-1.5 w-20 rounded-full" />
+          <p className="text-text-dark/80 text-lg leading-relaxed italic">
+            "We believe that a great burger starts with the finest ingredients.
             That’s why we carefully select fresh, locally sourced products and
-            prepare everything daily in our kitchen. From our soft, freshly
-            baked buns to our premium beef and handmade sauces, every detail is
-            crafted to deliver outstanding flavor. Our chefs combine traditional
-            techniques with modern creativity to create burgers that are both
-            classic and innovative. With every order, we aim to provide a
-            delicious, satisfying, and memorable experience. Whether you crave a
-            simple cheeseburger or a bold signature creation, we promise
-            quality, freshness, and taste in every single bite.
+            prepare everything daily in our kitchen."
+          </p>
+          <p className="text-text-dark/60 leading-relaxed font-medium">
+            From our soft, freshly baked buns to our premium beef and handmade
+            sauces, every detail is crafted to deliver outstanding flavor.
           </p>
         </div>
       </div>
-      <div className="bg-main-light mt-20 grid items-center gap-4 lg:mt-36 lg:grid-cols-2">
-        <div className="order-3 p-6 md:p-8 lg:order-0 lg:px-10">
-          <p>
+
+      {/* Second Section: Mission (Reversed) */}
+      <div className="grid items-center gap-16 md:grid-cols-2">
+        <div className="order-2 space-y-6 lg:order-1">
+          <h2 className="text-main-btn text-4xl font-black tracking-tighter uppercase italic md:text-5xl">
+            Fast. Fresh. <br /> Straight to You.
+          </h2>
+          <div className="bg-main h-1.5 w-20 rounded-full" />
+          <p className="text-text-dark/80 text-lg leading-relaxed italic">
             Our mission is to make ordering your favorite burgers fast, easy,
-            and enjoyable. With our modern online platform, you can browse the
-            menu, customize your meal, and place your order in just a few
-            clicks. We focus on quick preparation and reliable delivery, so your
-            food arrives hot, fresh, and perfectly packed. Whether you are at
-            home, at work, or with friends, we bring restaurant-quality burgers
-            straight to your door. Convenience, speed, and customer satisfaction
-            are at the heart of everything we do, ensuring a smooth and
-            enjoyable ordering experience every time.
+            and enjoyable. Whether you are at home, at work, or with friends.
           </p>
+          <div className="flex gap-4 pt-4">
+            <div className="bg-main-light flex-1 rounded-lg p-4 text-center">
+              <span className="text-main-btn block text-2xl font-black">
+                30min
+              </span>
+              <span className="text-main-dark/50 text-[10px] font-bold uppercase">
+                Delivery
+              </span>
+            </div>
+            <div className="bg-main-light flex-1 rounded-lg p-4 text-center">
+              <span className="text-main-btn block text-2xl font-black">
+                Hot
+              </span>
+              <span className="text-main-dark/50 text-[10px] font-bold uppercase">
+                Bag System
+              </span>
+            </div>
+          </div>
         </div>
-        <div className="relative h-45 w-[90%] md:h-75">
+
+        <div className="group relative order-1 lg:order-2">
+          <div className="bg-main-btn/10 absolute -inset-4 rotate-2 rounded-2xl transition-transform duration-500 group-hover:rotate-0" />
           <img
             src={homeImg3}
-            alt="img"
-            className="absolute -top-8 right-0 bottom-50 left-[5%] h-60 w-full object-cover shadow-xl md:h-90"
+            alt="Delivery Service"
+            className="relative z-10 h-100 w-full rounded-xl object-cover shadow-2xl"
           />
         </div>
       </div>

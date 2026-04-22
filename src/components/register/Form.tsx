@@ -6,7 +6,7 @@ import { IoMailSharp } from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
-import img from "../../assets/homeImg1.jpg";
+import img from "../../assets/registerImg.jpg";
 import Button from "../../shared/UIElements/button/Button";
 import Spinner from "../../shared/UIElements/spinner/Spinner";
 import {
@@ -49,8 +49,8 @@ function RegisterForm() {
   };
 
   return (
-    <div className="container-box mt-28 md:mt-0">
-      <div className="grid min-h-screen lg:grid-cols-2">
+    <div className="container-box">
+      <div className="grid min-h-[80vh] lg:grid-cols-2">
         <div className="flex flex-col items-center justify-center p-6 sm:p-12">
           <div className="w-full max-w-md space-y-8">
             <div className="mb-8 text-center">
@@ -180,12 +180,10 @@ function RegisterForm() {
           <img
             src={img}
             alt="Burger Burger"
-            className="max-h-[80%] object-contain"
+            className="max-h-[80%] rounded-4xl object-cover shadow-2xl"
           />
         </div>
       </div>
-      {/* ToastContainer ana App.tsx'te değilse burada kalabilir */}
-      <ToastContainer position="top-right" autoClose={3000} />
     </div>
   );
 }

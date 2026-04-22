@@ -1,7 +1,6 @@
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
-import { FaArrowDown } from "react-icons/fa6";
-import Button from "../../shared/UIElements/button/Button";
+import { FaChevronDown, FaReceipt } from "react-icons/fa6";
 import { formatOrderDate, formatPrice } from "../../shared/utils/helper";
 import SingleOrderItem from "./SingleOrderItem";
 import type { Order } from "../../shared/schemas/orderSchemas";
@@ -10,61 +9,106 @@ function SingleOrder({ _id, createdAt, status, orderItems }: Order) {
   const [showOrder, setShowOrder] = useState(false);
   const totalPrice = orderItems.reduce((acc, item) => acc + item.price, 0);
   const { date, time } = formatOrderDate(createdAt);
+
+  // Status badge colors
+  const statusColors =
+    {
+      pending: "bg-amber-500/10 text-amber-500 border-amber-500/20",
+      completed: "bg-emerald-500/10 text-emerald-500 border-emerald-500/20",
+      canceled: "bg-rose-500/10 text-rose-500 border-rose-500/20",
+    }[status] || "bg-main/10 text-main-dark border-main/20";
+
   return (
-    <div className="bg-bg text-text-dark rounded-lg p-4 text-sm shadow-md md:text-base">
-      <div className="relative grid md:grid-cols-2 lg:grid-cols-3">
-        <p className="grid grid-cols-3">
-          <span className="font-bold">Order ID:</span>{" "}
-          <span className="col-span-2">{_id}</span>
-        </p>
-        <p className="grid grid-cols-3">
-          <span className="font-bold">Order Date:</span>{" "}
-          <span className="col-span-2">{date}</span>
-        </p>
-        <p className="grid grid-cols-3">
-          <span className="font-bold">Order Time:</span>{" "}
-          <span className="col-span-2">{time}</span>
-        </p>
-        <p className="grid grid-cols-3">
-          <span className="font-bold">Order Status:</span>
-          <span className="col-span-2">{status}</span>
-        </p>
-        <p className="grid grid-cols-3">
-          <span className="font-bold">Order Total:</span>{" "}
-          <span className="col-span-2">{formatPrice(totalPrice)}</span>
-        </p>
-        <Button
-          type="button"
-          onClick={() => setShowOrder((prev) => !prev)}
-          className="bg-main-btn hover:bg-main-btn-hover absolute right-0 bottom-0 flex items-center gap-1 px-4 py-2 text-white"
+    <div className="bg-bg border-main/10 overflow-hidden rounded-[2rem] border shadow-sm transition-all hover:shadow-md">
+      {/* Main Order Header */}
+      <div className="p-6">
+        <div className="flex flex-wrap items-start justify-between gap-4">
+          <div className="flex items-center gap-4">
+            {/* Visual Receipt Icon */}
+            <div className="bg-main-light text-main-btn flex h-12 w-12 items-center justify-center rounded-2xl">
+              <FaReceipt size={24} />
+            </div>
+            <div>
+              <p className="text-main-dark/50 text-[10px] font-black tracking-widest uppercase italic">
+                Order ID: {_id.slice(-8).toUpperCase()}
+              </p>
+              <h3 className="text-text-dark text-lg font-black tracking-tighter italic">
+                {date} <span className="text-main-btn">@</span> {time}
+              </h3>
+            </div>
+          </div>
+
+          {/* Order Status Badge */}
+          <div
+            className={`rounded-full border px-4 py-1 text-[10px] font-black tracking-widest uppercase ${statusColors}`}
+          >
+            {status}
+          </div>
+        </div>
+
+        {/* Quick Info Grid */}
+        <div className="border-main/20 mt-6 flex items-end justify-between border-t border-dashed pt-4">
+          <div>
+            <p className="text-main-dark/60 text-[10px] font-bold tracking-wider uppercase">
+              Items
+            </p>
+            <p className="text-text-dark text-xl font-black italic">
+              {orderItems.length}{" "}
+              {orderItems.length === 1 ? "Product" : "Products"}
+            </p>
+          </div>
+          <div className="text-right">
+            <p className="text-main-dark/60 text-[10px] font-bold tracking-wider uppercase">
+              Total Paid
+            </p>
+            <p className="text-main-btn text-2xl font-black italic drop-shadow-sm">
+              {formatPrice(totalPrice)}
+            </p>
+          </div>
+        </div>
+
+        {/* Expand Trigger */}
+        <button
+          onClick={() => setShowOrder(!showOrder)}
+          className="bg-main-light/50 text-main-dark hover:bg-main-light mt-4 flex w-full items-center justify-center gap-2 rounded-xl py-2 text-xs font-bold transition-all"
         >
-          <FaArrowDown />
-          <span>See orders</span>
-        </Button>
+          {showOrder ? "Hide Details" : "Show Order Details"}
+          <FaChevronDown
+            className={`transition-transform duration-300 ${showOrder ? "rotate-180" : ""}`}
+          />
+        </button>
       </div>
 
-      <motion.div
-        className="bg-main-light mt-4 p-1"
-        variants={{
-          hidden: { height: 0, opacity: 0 },
-          show: {
-            height: "auto",
-            opacity: 1,
-          },
-        }}
-        initial="hidden"
-        animate={showOrder ? "show" : "hidden"}
-        transition={{ duration: 0.3 }}
-        exit="hidden"
-      >
-        {orderItems.map((product) => (
-          <SingleOrderItem key={product._id} {...product} />
-        ))}
-        <p className="flex justify-end gap-1">
-          <span className="font-bold">Total: </span>
-          <span> {formatPrice(totalPrice)}</span>
-        </p>
-      </motion.div>
+      {/* Expanded Items List */}
+      <AnimatePresence>
+        {showOrder && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="bg-main-light/30 border-main/10 border-t"
+          >
+            <div className="space-y-1 p-4">
+              {orderItems.map((product) => (
+                <SingleOrderItem key={product._id} {...product} />
+              ))}
+
+              {/* Internal Summary */}
+              <div className="border-main/10 mt-4 flex justify-end border-t px-2 pt-4">
+                <p className="flex items-center gap-2">
+                  <span className="text-main-dark text-xs font-bold uppercase italic">
+                    Final Total:
+                  </span>
+                  <span className="text-main-btn text-lg font-black">
+                    {formatPrice(totalPrice)}
+                  </span>
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

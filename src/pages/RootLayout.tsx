@@ -4,13 +4,14 @@ import Modal from "../shared/UIElements/modal/Modal";
 import useCart from "../shared/hooks/useCart";
 import Cart from "../components/menuDetail/Cart";
 import ScrollToTop from "../shared/utils/ScrollToTop";
+import { ToastContainer } from "react-toastify";
 
 function RootLayout() {
   const { cart, setCartModal } = useCart();
   return (
     <div>
-      <main className="font-primary flex min-h-screen flex-col scroll-smooth">
-        <div className="flex-1 antialiased md:pt-47.5">
+      <main className="font-primary bg-main-light bg-dashboard-pattern flex min-h-screen flex-col scroll-smooth">
+        <div className="flex-1 pt-26 antialiased md:pt-47.5">
           <ScrollToTop />
           <Outlet />
         </div>
@@ -23,6 +24,7 @@ function RootLayout() {
       >
         <Cart />
       </Modal>
+      <ToastContainer />
     </div>
   );
 }

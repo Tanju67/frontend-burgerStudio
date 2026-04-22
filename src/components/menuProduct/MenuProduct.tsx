@@ -2,7 +2,7 @@ import { useParams, useSearchParams } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import useDashboard from "../../shared/hooks/useDahboard";
 import { useGetProductsByMenuQuery } from "../../shared/services/productApi";
-import DashboardMenuSkeleton from "../../shared/skeletons/DahboardMenuSkeleton";
+import DashboardProductSkeleton from "../../shared/skeletons/DashboardProductSkeleton";
 import Button from "../../shared/UIElements/button/Button";
 import DashboardNav from "../../shared/UIElements/dashboardNav/DashboardNav";
 import NavItem from "../../shared/UIElements/dashboardNav/NavItem";
@@ -10,7 +10,6 @@ import Modal from "../../shared/UIElements/modal/Modal";
 import { dashboardProductNavData } from "../../shared/utils/data";
 import AddProductForm from "./AddProductForm";
 import Content from "./Content";
-import DashboardProductSkeleton from "../../shared/skeletons/DashboardProductSkeleton";
 
 function MenuProduct() {
   const [searchParams] = useSearchParams();

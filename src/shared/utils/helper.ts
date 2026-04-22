@@ -1,3 +1,4 @@
+import type { FieldError } from "react-hook-form";
 import type { Order } from "../schemas/orderSchemas";
 
 export const formatOrderDate = (isoDate: string) => {
@@ -87,3 +88,21 @@ export function formatPrice(value: number) {
     maximumFractionDigits: 2,
   }).format(value);
 }
+
+export const giveAddressArr = (errors: any) => {
+  return [
+    { id: "street", label: "Street", error: errors.street },
+    {
+      id: "houseNumber",
+      label: "House Number",
+      error: errors.houseNumber,
+    },
+    { id: "postalCode", label: "Postal Code", error: errors.postalCode },
+    { id: "city", label: "City", error: errors.city },
+    {
+      id: "phoneNumber",
+      label: "Phone Number",
+      error: errors.phoneNumber,
+    },
+  ];
+};

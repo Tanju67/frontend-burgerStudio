@@ -5,6 +5,7 @@ import { useAppDispatch } from "../../store/hooks";
 import MobileNav from "./MobileNav";
 import NavWithLogo from "./NavWithLogo";
 import SubNav from "./SubNav";
+import useCart from "../../hooks/useCart";
 
 export type MainNavProps = {
   title: string | boolean;
@@ -15,9 +16,12 @@ function MainNav({ title, admin }: MainNavProps) {
   const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const { clearCart } = useCart();
 
   const logout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("cartData");
+    clearCart();
     dispatch(baseApi.util.resetApiState());
     navigate("/login");
   };

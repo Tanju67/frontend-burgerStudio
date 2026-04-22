@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { AnimatePresence, motion, type Variants } from "framer-motion";
 import { BiFoodMenu } from "react-icons/bi";
 import { FaHome } from "react-icons/fa";
 import { FaPersonCirclePlus } from "react-icons/fa6";
@@ -33,142 +33,165 @@ function MobileMenuList({
   const isAdmin = data?.role === "admin" || data?.role === "test-admin";
   const isUser = data?.role === "user";
   const isLoggedIn = data !== undefined;
+
+  // Stagger effect for menu items
+  const containerVariants: Variants = {
+    hidden: { opacity: 0, scale: 0.8, borderRadius: "100%" },
+    show: {
+      opacity: 1,
+      scale: 1,
+      borderRadius: "0%",
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2,
+        duration: 0.4,
+        ease: "circOut",
+      },
+    },
+  };
+
+  const itemVariants: Variants = {
+    hidden: { x: -20, opacity: 0 },
+    show: { x: 0, opacity: 1 },
+  };
   return (
-    <motion.div
-      className="bg-bg fixed top-0 right-0 z-40 flex h-screen w-full flex-col items-center justify-center gap-2 text-xl capitalize"
-      variants={{
-        hidden: { height: 0, opacity: 0, width: 0, borderRadius: "100%" },
-        show: { height: "100vh", opacity: 1, width: "100%", borderRadius: "0" },
-      }}
-      initial="hidden"
-      animate={hamburger ? "show" : "hidden"}
-      transition={{ duration: 0.3 }}
-      exit="hidden"
-    >
-      <ul className="mt-20 flex flex-1 flex-col">
-        <li className="mb-20">
-          <img className="w-70" src={darkMode ? logoDark : logoLight} alt="" />
-        </li>
-        <li
-          className="border-b-main-btn border-b pb-2"
-          onClick={() => setHamburger(false)}
+    <AnimatePresence>
+      {hamburger && (
+        <motion.div
+          className="bg-bg fixed inset-0 z-60 flex flex-col items-center justify-between"
+          variants={containerVariants}
+          initial="hidden"
+          animate="show"
+          exit="hidden"
         >
-          <NavLink
-            className="hover:text-main-btn flex items-center gap-1 transition-all duration-300 ease-in-out"
-            to="/"
+          {/* Top Section: Logo & Close Hint */}
+          <div className="mt-12 flex w-full flex-col items-center px-6">
+            <motion.img
+              variants={itemVariants}
+              className="mb-4 w-48 drop-shadow-md"
+              src={darkMode ? logoDark : logoLight}
+              alt="Logo"
+            />
+            <div className="bg-main-btn/20 h-1 w-12 rounded-full" />
+          </div>
+
+          {/* Middle Section: Main Links */}
+          <nav className="flex w-full flex-col items-center gap-2 px-10">
+            <MenuLink
+              to="/"
+              icon={<FaHome />}
+              label="Home"
+              onClick={() => setHamburger(false)}
+              variants={itemVariants}
+            />
+            <MenuLink
+              to="/menu"
+              icon={<BiFoodMenu />}
+              label="Menu"
+              onClick={() => setHamburger(false)}
+              variants={itemVariants}
+            />
+
+            {isAdmin && (
+              <MenuLink
+                to="/dashboard/menus"
+                icon={<MdDashboardCustomize />}
+                label="Admin Panel"
+                onClick={() => setHamburger(false)}
+                variants={itemVariants}
+              />
+            )}
+
+            {isUser && (
+              <MenuLink
+                to="/order-history"
+                icon={<MdWorkHistory />}
+                label="My Orders"
+                onClick={() => setHamburger(false)}
+                variants={itemVariants}
+              />
+            )}
+          </nav>
+
+          {/* Bottom Section: Auth & Settings */}
+          <motion.div
+            variants={itemVariants}
+            className="bg-main-btn w-full rounded-t-[3rem] p-8 shadow-[0_-10px_40px_rgba(0,0,0,0.1)]"
           >
-            <span className="text-main-btn">
-              <FaHome />
-            </span>
-            <span> Home</span>
-          </NavLink>
-        </li>
-        <li
-          className="border-b-main-btn border-b py-2"
-          onClick={() => setHamburger(false)}
-        >
-          <NavLink
-            className="hover:text-main-btn flex items-center gap-1 transition-all duration-300 ease-in-out"
-            to="/menu"
-          >
-            <span className="text-main-btn">
-              <BiFoodMenu />
-            </span>
-            <span> Menu</span>
-          </NavLink>
-        </li>
-        {isAdmin && (
-          <li
-            className="border-b-main-btn border-b py-2"
-            onClick={() => setHamburger(false)}
-          >
-            <NavLink
-              className="hover:text-main-btn flex items-center gap-1 transition-all duration-300 ease-in-out"
-              to="/dashboard/menus"
-            >
-              <span className="text-main-btn">
-                <MdDashboardCustomize />
-              </span>
-              <span>Dashboard</span>
-            </NavLink>
-          </li>
-        )}
-        {isUser && (
-          <li
-            className="border-b-main-btn border-b py-2"
-            onClick={() => setHamburger(false)}
-          >
-            <NavLink
-              className="hover:text-main-btn flex items-center gap-1 transition-all duration-300 ease-in-out"
-              to="/order-history"
-            >
-              <span className="text-main-btn">
-                <MdWorkHistory />
-              </span>
-              <span>Order History</span>
-            </NavLink>
-          </li>
-        )}
-      </ul>
-      <ul className="bg-main-btn flex justify-center gap-4 place-self-stretch justify-self-stretch py-4 text-white">
-        {isLoggedIn === false && (
-          <>
-            <li onClick={() => setHamburger(false)}>
-              <NavLink
-                className="flex items-center gap-1 transition-all duration-300 ease-in-out hover:border-b hover:text-white"
-                to="/login"
+            <div className="flex flex-col gap-6">
+              <div className="flex items-center justify-center gap-6 text-sm font-black tracking-widest text-white/90 uppercase italic">
+                {!isLoggedIn ? (
+                  <>
+                    <NavLink
+                      to="/login"
+                      onClick={() => setHamburger(false)}
+                      className="flex items-center gap-2"
+                    >
+                      <IoLogInSharp size={20} /> Login
+                    </NavLink>
+                    <span className="opacity-30">|</span>
+                    <NavLink
+                      to="/register"
+                      onClick={() => setHamburger(false)}
+                      className="flex items-center gap-2"
+                    >
+                      <FaPersonCirclePlus size={20} /> Join Us
+                    </NavLink>
+                  </>
+                ) : (
+                  <button
+                    onClick={() => {
+                      logout();
+                      setHamburger(false);
+                    }}
+                    className="flex items-center gap-2"
+                  >
+                    <RiLogoutBoxFill size={20} /> Logout
+                  </button>
+                )}
+              </div>
+
+              <button
+                onClick={toggleDarkMode}
+                className="flex items-center justify-center gap-3 rounded-2xl border border-white/10 bg-white/10 py-4 text-white transition-all hover:bg-white/20"
               >
-                <span>
-                  <IoLogInSharp />
+                {darkMode ? (
+                  <MdLightMode size={24} />
+                ) : (
+                  <MdDarkMode size={24} />
+                )}
+                <span className="font-bold tracking-tighter uppercase italic">
+                  Switch to {darkMode ? "Light" : "Dark"} Mode
                 </span>
-                <span>login</span>
-              </NavLink>
-            </li>
-            |
-            <li onClick={() => setHamburger(false)}>
-              <NavLink
-                className="flex items-center gap-1 transition-all duration-300 ease-in-out hover:text-white"
-                to="/register"
-              >
-                <span>
-                  <FaPersonCirclePlus />
-                </span>
-                <span>Register</span>
-              </NavLink>
-            </li>{" "}
-          </>
-        )}
-        {isLoggedIn && (
-          <li
-            onClick={() => {
-              setHamburger(false);
-              logout();
-            }}
-          >
-            <NavLink
-              className="flex items-center gap-1 transition-all duration-300 ease-in-out hover:text-white"
-              to=""
-            >
-              <span>
-                <RiLogoutBoxFill />
-              </span>
-              <span>Logout</span>
-            </NavLink>
-          </li>
-        )}
-        |
-        <li onClick={() => setHamburger(false)}>
-          <button
-            onClick={toggleDarkMode}
-            className="flex items-center gap-1 transition-all duration-300 ease-in-out hover:text-white"
-          >
-            <span>{darkMode ? <MdLightMode /> : <MdDarkMode />}</span>
-            <span>{darkMode ? "Light" : "Dark"}</span>
-          </button>
-        </li>
-      </ul>
-    </motion.div>
+              </button>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }
 
+function MenuLink({ to, icon, label, onClick, variants }: any) {
+  return (
+    <motion.div variants={variants} className="w-full">
+      <NavLink
+        to={to}
+        onClick={onClick}
+        className={({ isActive }) =>
+          `flex w-full items-center justify-between rounded-2xl px-6 py-5 transition-all ${
+            isActive
+              ? "bg-main text-main-btn scale-105 shadow-sm"
+              : "text-text-dark/70 hover:bg-main-light"
+          }`
+        }
+      >
+        <span className="text-2xl font-black tracking-tighter uppercase italic">
+          {label}
+        </span>
+        <span className="text-main-btn text-2xl">{icon}</span>
+      </NavLink>
+    </motion.div>
+  );
+}
 export default MobileMenuList;

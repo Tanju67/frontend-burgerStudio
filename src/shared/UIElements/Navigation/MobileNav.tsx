@@ -20,13 +20,13 @@ function MobileNav({ title, logout }: MobileNavProps) {
     <nav className={`bg-bg fixed top-0 z-30 w-full md:hidden`}>
       <div className="flex items-center justify-between px-4 py-4">
         <div>
-          <div className="">
+          <NavLink to="/" onClick={() => setHamburger(false)}>
             <img
               src={darkMode ? logoDark : logoLight}
               alt="logo"
-              className={`w-50`}
+              className="w-32 object-contain transition-transform active:scale-95"
             />
-          </div>
+          </NavLink>
         </div>
         <div>
           <ToggleButton hamburger={hamburger} setHamburger={setHamburger} />
@@ -37,26 +37,30 @@ function MobileNav({ title, logout }: MobileNavProps) {
           logout={logout}
         />
       </div>
-      {!title && (
-        <div className="text-bpld bg-main px-4 py-2 text-center text-xl uppercase">
-          <NavLink to="/menu">
-            <h1>Order Online</h1>
+      <div className="relative overflow-hidden">
+        {!title || location.pathname === "/" ? (
+          <NavLink
+            to="/menu"
+            className="bg-main-btn block transform px-4 py-3 shadow-lg transition-transform active:translate-y-1"
+          >
+            <h1 className="animate-pulse text-center text-sm font-black tracking-widest text-white uppercase italic">
+              🔥 Order Online Now 🔥
+            </h1>
           </NavLink>
-        </div>
-      )}
-      {title && (
-        <div className="text-bpld bg-main px-4 py-2 text-center text-lg uppercase">
-          <div className="flex flex-1 items-center justify-center">
+        ) : (
+          <div className="bg-main flex items-center px-4 py-2.5 shadow-md">
             <NavLink
-              className="flex items-center gap-1 rounded-sm p-1 transition-all duration-300 ease-in-out"
-              to={".."}
+              className="text-main-dark flex h-8 w-8 items-center justify-center rounded-full bg-white/20 transition-all active:scale-90"
+              to=".."
             >
-              <IoArrowBackOutline />
+              <IoArrowBackOutline size={20} />
             </NavLink>
-            <h1 className="flex-1 text-center uppercase">{title}</h1>
+            <h1 className="text-main-dark flex-1 pr-8 text-center text-sm font-black tracking-tighter uppercase italic">
+              {title}
+            </h1>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </nav>
   );
 }

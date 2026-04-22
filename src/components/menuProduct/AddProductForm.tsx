@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-
 import useDashboard from "../../shared/hooks/useDahboard";
 import {
   useCreateProductMutation,
@@ -16,6 +15,8 @@ import {
   updateProductSchema,
 } from "../../shared/schemas/productSchemas";
 import { toaster } from "../../shared/utils/toaster";
+import { cn } from "../../shared/utils/cn";
+import { FaCloudUploadAlt } from "react-icons/fa";
 
 function AddProductForm() {
   const { data: user } = useGetCurrentUserQuery();
@@ -34,6 +35,7 @@ function AddProductForm() {
     register,
     handleSubmit,
     reset,
+    watch,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(
@@ -47,6 +49,9 @@ function AddProductForm() {
     },
   });
 
+  // Watch for image changes to show file name
+  const imageFile = watch("image");
+
   useEffect(() => {
     if (editingProduct) {
       reset({
@@ -58,117 +63,135 @@ function AddProductForm() {
   }, [editingProduct, reset]);
 
   const onSubmit = async (data: any) => {
-    if (isTestAdmin) {
+    if (isTestAdmin)
       return toaster("warning", "Test admin cannot modify data.");
-    }
 
     try {
       const fd = new FormData();
       fd.append("title", data.title);
       fd.append("description", data.description);
-      fd.append("price", data.price);
-      if (data.image?.[0]) {
-        fd.append("image", data.image[0]);
-      }
+      fd.append("price", data.price.toString());
+      if (data.image?.[0]) fd.append("image", data.image[0]);
 
       if (editingProduct) {
         await updateProduct({ id: editingProduct._id, data: fd }).unwrap();
-        toaster("success", "Product updated successfully");
+        toaster("success", "Product updated!");
       } else {
         await createProduct({ menuId: id!, data: fd }).unwrap();
-        toaster("success", "Menu created successfully");
+        toaster("success", "Product added!");
       }
-
       closeProductModal();
       reset();
     } catch (error) {
-      console.error(error);
-      toaster("error", "An unexpected error occurred");
+      toaster("error", "Action failed. Check fields.");
     }
   };
 
-  return (
-    <div className="bg-main-light rounded-xl p-6 shadow-lg">
-      <h2 className="text-main-btn mb-6 text-center text-2xl font-bold uppercase">
-        {editingProduct ? "Edit Product" : "Add New Product"}
-      </h2>
+  const inputStyles = (hasError: any) =>
+    cn(
+      "w-full bg-white border-4 rounded-2xl px-4 py-3 font-bold text-main-btn transition-all outline-none",
+      hasError
+        ? "border-red-500"
+        : "border-main focus:border-main-btn focus:shadow-[4px_4px_0px_0px_rgba(var(--main-btn-rgb),1)]",
+    );
 
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+  return (
+    <div className="bg-bg rounded-[2.5rem] p-2 sm:p-4">
+      {/* Header */}
+      <div className="mb-8 text-center">
+        <h2 className="text-main-btn text-2xl font-black tracking-tighter uppercase italic">
+          {editingProduct ? "Edit Item" : "Create Item"}
+        </h2>
+        <div className="bg-main mx-auto mt-2 h-1.5 w-16 rounded-full" />
+      </div>
+
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
         {/* Title */}
-        <div className="flex flex-col gap-1">
+        <div className="space-y-1">
+          <label className="text-main-btn/40 ml-2 text-[10px] font-black tracking-widest uppercase">
+            Product Name
+          </label>
           <input
             {...register("title")}
             type="text"
-            placeholder="Product Title"
-            className={`input bg-main w-full rounded border-2 p-2 outline-0 ${errors.title ? "border-red-500" : "focus:border-main-btn border-transparent"}`}
+            placeholder="e.g. Double Studio Burger"
+            className={inputStyles(errors.title)}
           />
           {errors.title && (
-            <span className="ml-1 text-xs text-red-500">
+            <span className="ml-2 text-[10px] font-bold text-red-500 uppercase">
               {errors.title.message as string}
             </span>
           )}
         </div>
 
-        {/* Price */}
-        <div className="flex flex-col gap-1">
-          <input
-            {...register("price")}
-            type="number"
-            step="0.01"
-            placeholder="Price"
-            className={`input bg-main w-full rounded border-2 p-2 outline-0 ${errors.price ? "border-red-500" : "focus:border-main-btn border-transparent"}`}
-          />
-          {errors.price && (
-            <span className="ml-1 text-xs text-red-500">
-              {errors.price.message as string}
-            </span>
-          )}
-        </div>
+        {/* Price & Image Grid */}
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <div className="space-y-1">
+            <label className="text-main-btn/40 ml-2 text-[10px] font-black tracking-widest uppercase">
+              Price ($)
+            </label>
+            <input
+              {...register("price")}
+              type="number"
+              step="0.01"
+              className={inputStyles(errors.price)}
+            />
+          </div>
 
-        {/* Image */}
-        <div className="flex flex-col gap-1">
-          <input
-            {...register("image")}
-            type="file"
-            accept=".jpg,.png,.jpeg"
-            className="input bg-main w-full rounded border-2 border-transparent p-1"
-          />
-          {errors.image && (
-            <span className="ml-1 text-xs text-red-500">
-              {errors.image.message as string}
-            </span>
-          )}
+          <div className="space-y-1">
+            <label className="text-main-btn/40 ml-2 text-[10px] font-black tracking-widest uppercase">
+              Photo
+            </label>
+            <label
+              className={cn(
+                "flex cursor-pointer items-center justify-center gap-2 rounded-2xl border-4 border-dashed py-3 transition-all",
+                imageFile?.[0]
+                  ? "border-green-500 bg-green-50 text-green-600"
+                  : "border-main text-main-btn hover:bg-main/10",
+              )}
+            >
+              <FaCloudUploadAlt size={20} />
+              <span className="truncate px-2 text-xs font-black uppercase">
+                {imageFile?.[0] ? imageFile[0].name : "Upload Image"}
+              </span>
+              <input
+                {...register("image")}
+                type="file"
+                className="hidden"
+                accept=".jpg,.png,.jpeg"
+              />
+            </label>
+          </div>
         </div>
 
         {/* Description */}
-        <div className="flex flex-col gap-1">
+        <div className="space-y-1">
+          <label className="text-main-btn/40 ml-2 text-[10px] font-black tracking-widest uppercase">
+            Description
+          </label>
           <textarea
             {...register("description")}
-            rows={4}
-            placeholder="Description"
-            className={`textarea bg-main w-full resize-none rounded p-2 outline-0 ${errors.description ? "border-red-500" : "focus:border-main-btn border-transparent"}`}
+            rows={3}
+            className={cn(inputStyles(errors.description), "resize-none")}
+            placeholder="Describe the ingredients..."
           />
-          {errors.description && (
-            <span className="ml-1 text-xs text-red-500">
-              {errors.description.message as string}
-            </span>
-          )}
         </div>
 
-        <div className="mt-2 flex justify-end">
+        {/* Action Button */}
+        <div className="pt-4">
           <Button
             type="submit"
             disabled={isLoading || isUpdating}
-            className="bg-main-btn hover:bg-main-btn-hover min-w-35 px-6 py-2 text-white transition-all"
+            className="bg-main-btn hover:bg-main-btn-hover w-full rounded-2xl py-4 font-black tracking-tighter text-white uppercase italic shadow-xl transition-all active:scale-95 disabled:opacity-50"
           >
             {isLoading || isUpdating ? (
-              <div className="flex items-center justify-center gap-2">
-                <Spinner /> <span>Processing...</span>
+              <div className="flex items-center justify-center gap-2 italic">
+                <Spinner /> Processing...
               </div>
             ) : editingProduct ? (
               "Update Product"
             ) : (
-              "Save Product"
+              "Save to Menu"
             )}
           </Button>
         </div>

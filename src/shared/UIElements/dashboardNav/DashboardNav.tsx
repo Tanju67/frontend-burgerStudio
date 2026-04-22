@@ -13,18 +13,29 @@ function DashboardNav({
   isRedirect?: boolean;
 }) {
   return (
-    <div className="bg-main text-text-dark flex items-center justify-between px-4 py-2">
-      <div>
+    <div className="bg-main text-main-btn border-main-btn/5 flex items-center justify-between rounded-t-2xl border-b px-6 py-3 shadow-sm">
+      <div className="flex items-center gap-2">
         {isRedirect && (
-          <Link to=".." className="flex items-center justify-center gap-1">
-            <IoArrowBackOutline />
-            <span className="py-1 font-bold capitalize">{title}</span>
+          <Link
+            to=".."
+            className="bg-main-btn/10 hover:bg-main-btn group flex items-center gap-2 rounded-lg px-3 py-1 transition-all hover:text-white"
+          >
+            <IoArrowBackOutline className="transition-transform group-hover:-translate-x-1" />
+            <span className="text-sm font-black tracking-tighter uppercase italic">
+              Back
+            </span>
           </Link>
         )}
-        {!isRedirect && <span className="py-1 font-bold">{title}</span>}
+        <h2
+          className={`text-xl font-black tracking-tighter uppercase italic ${!isRedirect && "py-1"}`}
+        >
+          {title}
+        </h2>
       </div>
 
-      {rightSection && <div>{children}</div>}
+      {rightSection && (
+        <div className="flex items-center gap-4">{children}</div>
+      )}
     </div>
   );
 }

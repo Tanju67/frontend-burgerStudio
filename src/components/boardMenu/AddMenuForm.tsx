@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import useDashboard from "../../shared/hooks/useDahboard";
 import {
   useCreateMenuMutation,
@@ -72,64 +72,74 @@ function AddMenuForm() {
   };
 
   return (
-    <div className="bg-main-light text-text-dark rounded-xl p-6 shadow-lg">
-      <h2 className="text-main-btn mb-6 text-center text-2xl font-bold uppercase">
-        {editingMenu ? "Edit Menu" : "Create New Menu"}
+    <div className="bg-bg text-text-dark p-2 sm:p-4">
+      {/* Header: Mor ve İtalik */}
+      <h2 className="text-main-btn mb-8 text-center text-3xl font-black tracking-tighter uppercase italic">
+        {editingMenu ? "Update Menu" : "Add to Kitchen"}
       </h2>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
-        {/* Title Input */}
-        <div className="flex flex-col gap-1">
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
+        {/* Title Input Area */}
+        <div className="flex flex-col gap-2">
+          <label className="text-main-btn px-2 text-[10px] font-black tracking-widest uppercase italic">
+            Menu Name
+          </label>
           <input
             {...register("title")}
             type="text"
-            placeholder="Menu Title"
-            className={`input bg-main w-full border-2 outline-0 transition-colors ${errors.title ? "border-red-500" : "border-transparent"}`}
+            placeholder="e.g. Signature Burgers"
+            className={`bg-main/10 focus:bg-main/20 w-full rounded-2xl border-2 px-4 py-3 font-bold transition-all outline-none ${errors.title ? "border-red-500/50" : "border-main/20 focus:border-main"}`}
           />
           {errors.title && (
-            <span className="text-xs text-red-500">
+            <span className="px-2 text-[10px] font-bold text-red-500 uppercase">
               {errors.title.message as string}
             </span>
           )}
         </div>
 
-        {/* Image Input */}
-        <div className="flex flex-col gap-1">
-          <input
-            {...register("image")}
-            type="file"
-            accept=".jpg,.png,.jpeg"
-            className="file-input bg-main w-full"
-          />
+        {/* Image Upload Area */}
+        <div className="flex flex-col gap-2">
+          <label className="text-main-btn px-2 text-[10px] font-black tracking-widest uppercase italic">
+            Cover Image
+          </label>
+          <div className="group relative">
+            <input
+              {...register("image")}
+              type="file"
+              accept=".jpg,.png,.jpeg"
+              className="file:bg-main file:text-main-btn hover:file:bg-main-btn bg-main/10 border-main/30 w-full cursor-pointer rounded-2xl border-2 border-dashed p-4 transition-all file:mr-4 file:rounded-full file:border-0 file:px-4 file:py-2 file:text-xs file:font-black file:uppercase file:italic hover:file:text-white"
+            />
+          </div>
           {errors.image && (
-            <span className="text-xs text-red-500">
+            <span className="px-2 text-[10px] font-bold text-red-500 uppercase">
               {errors.image.message as string}
             </span>
           )}
         </div>
 
-        {/* Actions */}
-        <div className="mt-2 flex justify-end gap-3">
+        {/* Action Buttons */}
+        <div className="mt-4 flex items-center gap-4">
           <Button
             type="button"
             onClick={closeMenuModal}
-            className="bg-gray-400 px-4 py-2 hover:bg-gray-500"
+            className="bg-main text-main-btn hover:bg-main/80 flex-1 rounded-2xl py-3 font-black tracking-widest uppercase italic transition-all"
           >
             Cancel
           </Button>
+
           <Button
             type="submit"
             disabled={isCreating || isUpdating}
-            className="bg-main-btn hover:bg-main-btn-hover min-w-30 p-2"
+            className="bg-main-btn hover:bg-main-btn/90 shadow-main-btn/20 flex-[2] rounded-2xl py-3 font-black tracking-widest text-white uppercase italic shadow-lg transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50"
           >
             {isCreating || isUpdating ? (
-              <div className="flex items-center justify-center gap-2">
-                <Spinner /> <span>Saving...</span>
+              <div className="flex items-center justify-center gap-3">
+                <Spinner /> <span className="animate-pulse">Cooking...</span>
               </div>
             ) : editingMenu ? (
-              "Update"
+              "Update Kitchen"
             ) : (
-              "Save"
+              "Fire Up Menu"
             )}
           </Button>
         </div>

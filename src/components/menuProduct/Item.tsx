@@ -18,129 +18,197 @@ function Item({ _id, title, image, description, price }: Product) {
     openProductModal,
   } = useDashboard();
   const [deleteProduct, { isLoading }] = useDeleteProductMutation();
+
   const isGrid = menuActiveTab === 0;
   const isList = menuActiveTab === 1;
   const isImage = menuActiveTab === 2;
-
   const isTestAdmin = user?.role === "test-admin";
 
   const deleteProductHandler = async () => {
-    if (isTestAdmin) {
+    if (isTestAdmin)
       return toaster("warning", "Test admin cannot delete items.");
-    }
-
     if (!confirm("Are you sure?")) return;
-
     try {
       await deleteProduct(_id).unwrap();
-      toaster("success", "Menu deleted");
+      toaster("success", "Product deleted");
     } catch (error) {
       console.log(error);
-      toaster("error", "Failed to delete menu");
+      toaster("error", "Failed to delete");
     }
-  };
-
-  const handleEdit = () => {
-    openProductModal({ _id, title, description, price });
   };
 
   return (
     <li
       className={cn(
-        "text-xs sm:text-sm md:text-base",
-        !isImage &&
-          "border-main bg-main-light flex w-full items-center justify-between gap-4 border p-1",
-        isImage && "bg-main-light relative shadow-md",
+        "bg-main-light overflow-hidden rounded-3xl shadow-sm",
+        isList && "flex items-center justify-between gap-4 p-2",
+        isGrid && "flex flex-col gap-3 p-4",
+        isImage &&
+          "group bg-main-light flex flex-col overflow-hidden rounded-3xl shadow-md transition-all hover:shadow-xl",
       )}
     >
+      {/* HEADER SECTION (Photo + Title + Price/Buttons) */}
       <div
         className={cn(
-          isGrid &&
-            "flex w-60 items-center gap-1 text-sm max-[465px]:flex-row min-[465px]:w-24 min-[465px]:flex-col",
-          isList && "flex w-60 items-center gap-1 text-sm",
-          isImage && "w-full",
+          "flex items-center gap-3",
+          isGrid && "border-main/10 w-full justify-between border-b-2 pb-3",
+          isImage && "h-48 w-full border-0 p-0 sm:h-60 lg:h-72",
+          isList && "",
         )}
       >
-        <img
-          src={image || noImg}
-          alt={title}
+        {/* Product Image */}
+        <div
           className={cn(
-            "object-cover object-center",
-            !isImage && "min-h-16 w-24",
-            isImage && "h-80 w-full",
+            "bg-main/10 shrink-0 overflow-hidden rounded-2xl",
+            !isImage && "h-16 w-16",
+            isImage && "h-full w-full rounded-none",
           )}
-        />
-        {!isImage && (
-          <span className={cn(!isImage && "line-clamp-1 font-bold capitalize")}>
-            {title}
-          </span>
+        >
+          <img
+            src={image || noImg}
+            alt={title}
+            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+        </div>
+
+        {/* Title & Info (Grid Mode) */}
+        {isGrid && (
+          <div className="flex min-w-0 flex-1 flex-col justify-center md:hidden lg:flex">
+            <h3 className="text-main-btn line-clamp-1 text-base font-black tracking-tighter uppercase italic">
+              {title}
+            </h3>
+            <span className="text-main-btn text-sm font-bold italic">
+              {formatPrice(price)}
+            </span>
+          </div>
+        )}
+
+        {/* List Mode Title */}
+        {isList && (
+          <div className="flex-1">
+            <h3 className="text-main-btn text-base font-black tracking-tighter uppercase italic">
+              {title}
+            </h3>
+          </div>
+        )}
+
+        {/* Actions (Grid Header Right) */}
+        {isGrid && (
+          <div className="flex gap-1">
+            <Button
+              type="button"
+              onClick={() =>
+                openProductModal({ _id, title, description, price })
+              }
+              className="bg-main-btn rounded-xl p-2 text-white transition-all hover:scale-105 active:scale-95"
+            >
+              <FaEdit size={14} />
+            </Button>
+            <Button
+              type="button"
+              onClick={deleteProductHandler}
+              className="rounded-xl bg-red-500/80 p-2 transition-all hover:scale-105 hover:bg-red-600 hover:text-white active:scale-95"
+            >
+              {isLoading ? <Spinner /> : <MdDeleteForever size={16} />}
+            </Button>
+          </div>
         )}
       </div>
-      <div className={cn(!isImage && "flex-1", isImage && "p-2")}>
-        <span
-          className={cn("text-sm italic", !isImage && "hidden lg:line-clamp-1")}
-        >
-          {description}
-        </span>
-      </div>
-      {!isImage && (
-        <div className="flex w-20">
-          <span
-            className={cn(
-              !isImage &&
-                "bg-main-dark flex-1 rounded-sm p-1 text-center text-white",
-            )}
-          >
-            {formatPrice(price)}
-          </span>
-        </div>
-      )}
+
+      {/* CONTENT SECTION (Description) */}
       <div
         className={cn(
-          isImage &&
-            "bg-main-btn/70 absolute top-70 flex w-full justify-between p-1 text-white",
+          "flex-1",
+          isList && "hidden sm:line-clamp-2",
+          isImage && "flex flex-col gap-2 p-4",
         )}
       >
         {isImage && (
-          <div className="flex gap-4">
-            <span className="font-bold capitalize">{title}</span>
-            <span>{formatPrice(price)}</span>
+          <div className="flex items-center justify-between">
+            <h3 className="text-main-btn text-base font-black tracking-tight uppercase italic">
+              {title}
+            </h3>
+            <span className="text-main-btn text-sm font-bold italic">
+              {formatPrice(price)}
+            </span>
           </div>
         )}
-        <div
+
+        {isGrid && (
+          <div className="hidden min-w-0 flex-1 flex-col justify-center md:flex lg:hidden">
+            <h3 className="text-main-btn line-clamp-1 text-base font-black tracking-tighter uppercase italic">
+              {title}
+            </h3>
+            <span className="text-main-btn text-sm font-bold italic">
+              {formatPrice(price)}
+            </span>
+          </div>
+        )}
+        <p
           className={cn(
-            !isImage && "flex h-full flex-col justify-between gap-1 text-white",
-            isImage && "flex gap-4",
+            "text-xs leading-tight font-medium italic",
+            isImage && "text-main-dark opacity-100",
+            isGrid && "",
           )}
         >
+          {description}
+        </p>
+      </div>
+
+      {/* FOOTER ACTIONS (Only for List Mode) */}
+      {isList && (
+        <div className="flex items-center gap-3">
+          <span className="bg-main-btn rounded-lg px-3 py-1 text-xs font-black text-white italic">
+            {formatPrice(price)}
+          </span>
+          <div className="flex flex-col gap-1">
+            <Button
+              type="button"
+              onClick={() =>
+                openProductModal({ _id, title, description, price })
+              }
+              className="bg-main-btn rounded-xl p-2 text-white transition-all hover:scale-105 active:scale-95"
+            >
+              <FaEdit size={14} />
+            </Button>
+            <Button
+              type="button"
+              onClick={deleteProductHandler}
+              className="rounded-xl bg-red-500/80 p-2 transition-all hover:scale-105 hover:bg-red-600 hover:text-white active:scale-95"
+            >
+              {isLoading ? <Spinner /> : <MdDeleteForever size={16} />}
+            </Button>
+          </div>
+        </div>
+      )}
+      {isImage && (
+        <div className="flex gap-2 p-4">
           <Button
             type="button"
-            disabled={isLoading}
-            className={cn(
-              !isImage &&
-                "group bg-main-btn hover:bg-main-btn-hover flex flex-1 items-center justify-center p-2",
-              isImage &&
-                "hover:text-main-btn will-change-colors flex items-center justify-center p-1 transition-colors duration-300 ease-in-out hover:bg-white",
-            )}
-            onClick={() => handleEdit()}
+            onClick={() => openProductModal({ _id, title, description, price })}
+            className="bg-main-btn flex-1 rounded-xl p-2 text-white transition-all hover:scale-105 active:scale-95"
           >
-            <FaEdit />
+            <span className="flex items-center justify-center gap-2 font-black tracking-tighter uppercase italic">
+              <FaEdit size={18} />
+              <span>Delete</span>
+            </span>
           </Button>
           <Button
             type="button"
-            disabled={isLoading}
             onClick={deleteProductHandler}
-            className={cn(
-              !isImage &&
-                "group bg-main-btn hover:bg-main-btn-hover flex flex-1 items-center justify-center p-2",
-              isImage &&
-                "hover:text-main-btn will-change-colors flex items-center justify-center p-1 transition-colors duration-300 ease-in-out hover:bg-white",
-            )}
+            className="flex-1 rounded-xl bg-red-500/80 p-2 transition-all hover:scale-105 hover:bg-red-600 hover:text-white active:scale-95"
           >
-            {isLoading ? <Spinner /> : <MdDeleteForever />}
+            {isLoading ? (
+              <Spinner />
+            ) : (
+              <span className="flex items-center justify-center gap-2 font-black tracking-tighter uppercase italic">
+                <MdDeleteForever size={18} />
+                <span>Delete</span>
+              </span>
+            )}
           </Button>
         </div>
-      </div>
+      )}
     </li>
   );
 }

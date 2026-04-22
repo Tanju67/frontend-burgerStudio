@@ -4,67 +4,56 @@ import type { Product } from "../../shared/schemas/productSchemas";
 import { selectTotalPrice } from "../../shared/store/CartSlice";
 import Button from "../../shared/UIElements/button/Button";
 import { formatPrice } from "../../shared/utils/helper";
+import CartEmpty from "./CartEmpty";
 import CartListItem from "./CartListItem";
 
 function CartList() {
   const { cart, setCartModal, setActiveCart } = useCart();
   const totalPrice = useSelector(selectTotalPrice);
-  if (cart.cartData.length === 0) {
-    return (
-      <ul className="flex flex-col gap-2 py-8 text-xs md:text-base">
-        <p className="text-center">
-          Your cart is empty. Start adding some delicious items!
-        </p>
-        <div className="mb-4 flex items-center justify-center">
-          <Button
-            type="button"
-            onClick={() => setCartModal(false)}
-            className="bg-secondary-btn border-0 px-4 py-2"
-          >
-            Return to Menu
-          </Button>
-        </div>
-      </ul>
-    );
-  }
-  return (
-    <ul className="mt-4 flex flex-col gap-2 text-xs md:text-base">
-      {cart.cartData.map((item: Product) => (
-        <CartListItem
-          key={item._id}
-          _id={item._id}
-          title={item.title}
-          image={item.image}
-          price={item.price}
-          amount={item.amount}
-        />
-      ))}
 
-      <div className="text-end">
-        <p>
-          <span>Total:</span> <span>{formatPrice(totalPrice)}</span>
-        </p>
+  if (cart.cartData.length === 0) {
+    return <CartEmpty setCartModal={setCartModal} />;
+  }
+
+  return (
+    <div className="mt-6 flex flex-col">
+      <ul className="border-main/10 bg-main-light/30 dark:bg-main/10 flex flex-col gap-4 overflow-hidden rounded-2xl border p-2">
+        {cart.cartData.map((item: Product) => (
+          <CartListItem key={item._id} {...item} />
+        ))}
+      </ul>
+
+      <div className="border-main-dark/30 mt-6 flex items-end justify-between border-t border-dashed px-2 pt-4">
+        <span className="text-main-dark text-sm font-bold tracking-widest uppercase">
+          Total Amount
+        </span>
+        <div className="text-right">
+          <p className="text-main-btn text-3xl font-black tracking-tighter italic drop-shadow-sm">
+            {formatPrice(totalPrice)}
+          </p>
+        </div>
       </div>
 
       {cart.activeCart === 0 && (
-        <div className="mt-4 mb-8 flex items-center justify-between">
-          <Button
+        <div className="mt-8 mb-4 flex items-center justify-between gap-4">
+          <button
             type="button"
             onClick={() => setCartModal(false)}
-            className="bg-secondary-btn hover:bg-secondary-btn-hover px-4 py-2"
+            className="text-main-dark hover:text-secondary-btn text-sm font-bold tracking-widest uppercase transition-colors"
           >
-            Return
-          </Button>
+            ← Back
+          </button>
+
           <Button
             type="button"
             onClick={() => setActiveCart(1)}
-            className="bg-main-btn hover:bg-main-btn-hover px-4 py-2 text-xs text-white transition-all duration-300 ease-in-out active:scale-90 md:text-base"
+            className="bg-main-btn hover:bg-main-btn-hover flex-1 rounded-xl py-4 text-sm font-black tracking-widest text-white uppercase shadow-[0_10px_20px_rgba(110,2,111,0.2)] transition-all active:scale-95 md:text-base"
           >
-            Contiune
+            Continue to Checkout
           </Button>
         </div>
       )}
-    </ul>
+    </div>
   );
 }
 

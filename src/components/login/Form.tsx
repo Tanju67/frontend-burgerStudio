@@ -4,8 +4,7 @@ import { useForm, type SubmitHandler } from "react-hook-form";
 import { FaEye, FaEyeSlash, FaLock } from "react-icons/fa";
 import { IoMailSharp } from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
-import img from "../../assets/homeImg1.jpg";
+import img from "../../assets/loginImg.jpg";
 
 import {
   loginSchema,
@@ -38,7 +37,6 @@ function Form() {
       const response = await loginUser(values).unwrap();
       localStorage.setItem("token", response.token);
       toaster("success", response.message);
-
       setTimeout(() => navigate("/"), 2000);
     } catch (err: unknown) {
       console.log(err);
@@ -57,8 +55,8 @@ function Form() {
   };
 
   return (
-    <div className="container-box mt-28 md:mt-0">
-      <div className="grid min-h-screen lg:grid-cols-2">
+    <div className="container-box">
+      <div className="bg-base-200 grid min-h-[80vh] grid-cols-1 items-center justify-center gap-12 px-4 py-8 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2">
         <div className="flex flex-col items-center justify-center p-6 sm:p-12">
           <div className="w-full max-w-md space-y-8">
             <div className="mb-8 text-center">
@@ -191,9 +189,12 @@ function Form() {
         </div>
 
         <div className="hidden items-center justify-center lg:flex">
-          <img src={img} alt="" />
+          <img
+            src={img}
+            alt=""
+            className="max-h-[80%] rounded-4xl object-cover shadow-2xl"
+          />
         </div>
-        <ToastContainer />
       </div>
     </div>
   );

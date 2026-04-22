@@ -2,6 +2,7 @@ import { createPortal } from "react-dom"; // Portal için import
 import { AnimatePresence, motion } from "framer-motion";
 import { useArrangeScrollBar } from "../../hooks/useArrangeScrollBar";
 import { useEffect } from "react";
+import { IoCloseCircleOutline } from "react-icons/io5";
 
 type ModalProps = {
   children: React.ReactNode;
@@ -31,14 +32,17 @@ function Modal({ children, onClose, className = "", open }: ModalProps) {
     <AnimatePresence>
       {open && (
         <motion.div
-          className="fixed inset-0 z-100 flex items-center justify-center" // Z-index'i biraz yükselttim
+          className="fixed inset-0 z-100 flex items-center justify-center"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.3 }}
         >
           {/* Overlay */}
-          <div className="absolute inset-0 bg-black/80" onClick={onClose} />
+          <div
+            className="absolute inset-0 bg-black/60 backdrop-blur-sm transition-all"
+            onClick={onClose}
+          />
 
           {/* Modal Box */}
           <motion.div
@@ -47,13 +51,14 @@ function Modal({ children, onClose, className = "", open }: ModalProps) {
             exit={{ scale: 0.1, opacity: 0, y: 40 }}
             transition={{ duration: 0.3 }}
             className={`relative z-110 rounded-lg p-4 pt-8 shadow-2xl md:p-8 ${className}`}
-            onClick={(e) => e.stopPropagation()} // Box içine tıklayınca kapanmasın
+            onClick={(e) => e.stopPropagation()}
           >
             <button
-              className="hover:text-main-btn-hover text-main-btn absolute top-0 right-2 text-4xl transition-colors duration-300"
+              className="text-main-btn hover:text-main-btn-hover absolute top-1 right-1 z-120 transition-all duration-300 hover:rotate-90 active:scale-90"
               onClick={onClose}
+              aria-label="Close modal"
             >
-              &times;
+              <IoCloseCircleOutline size={40} />
             </button>
 
             {children}

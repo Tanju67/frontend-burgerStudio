@@ -8,7 +8,7 @@ function ToggleButton({ hamburger, setHamburger }: ToggleButtonProps) {
     <button
       id="menu-btn"
       className={
-        "hamburger z-50 block focus:outline-none md:hidden " +
+        "hamburger z-100 block focus:outline-none md:hidden " +
         (hamburger ? " open" : "")
       }
       onClick={() => {

@@ -10,6 +10,7 @@ import {
 import { toaster } from "../../shared/utils/toaster";
 import Spinner from "../../shared/UIElements/spinner/Spinner";
 import { useGetCurrentUserQuery } from "../../shared/services/authApi";
+import { cn } from "../../shared/utils/cn";
 
 function StatusUpdateForm() {
   const {
@@ -22,7 +23,7 @@ function StatusUpdateForm() {
 
   const isTestAdmin = user?.role === "test-admin";
 
-  // 1. Hook Form Kurulumu
+  // Form setup with Zod
   const {
     register,
     handleSubmit,
@@ -30,7 +31,7 @@ function StatusUpdateForm() {
   } = useForm<UpdateOrderStatus>({
     resolver: zodResolver(updateOrderStatusSchema),
     defaultValues: {
-      status: "preparing", // Başlangıç değeri
+      status: "preparing",
     },
   });
 
@@ -51,72 +52,85 @@ function StatusUpdateForm() {
       toaster("success", "Order status updated");
       closeOrderStatusModal();
     } catch (error: any) {
-      console.error(error);
       const msg = error?.data?.message || "Failed to update status";
       toaster("error", msg);
     }
   };
 
   return (
-    <div className="p-2">
-      <h2 className="text-main-btn mb-4 text-center text-xl font-bold uppercase">
-        Update Order Status
-      </h2>
+    <div className="bg-bg rounded-[2.5rem] p-4">
+      {/* Header with Studio Accent */}
+      <div className="mb-8 text-center">
+        <h2 className="text-main-btn text-2xl leading-none font-black tracking-tighter uppercase italic">
+          Update Order Status
+        </h2>
+        <div className="bg-main mx-auto mt-2 h-1 w-12 rounded-full" />
+      </div>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-        <fieldset className="fieldset">
-          <legend className="fieldset-legend text-text-dark font-semibold">
-            Order Status
-          </legend>
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+        <fieldset className="space-y-2">
+          <label className="text-main-btn ml-2 text-[10px] font-black tracking-[0.2em] uppercase">
+            Select Current Stage
+          </label>
 
-          <select
-            {...register("status")}
-            className={`select bg-main-light text-text-dark w-full border-2 transition-colors ${
-              errors.status
-                ? "border-red-500"
-                : "focus:border-main-btn border-transparent"
-            }`}
-          >
-            <option value="preparing">Preparing</option>
-            <option value="out_for_delivery">Out for delivery</option>
-            <option value="delivered">Delivered</option>
-            <option value="cancelled">Cancelled</option>
-          </select>
+          <div className="group relative">
+            <select
+              {...register("status")}
+              className={cn(
+                "text-main-btn w-full cursor-pointer appearance-none rounded-2xl border-4 bg-white px-5 py-4 font-bold transition-all outline-none",
+                errors.status
+                  ? "border-red-500 shadow-[4px_4px_0px_0px_rgba(239,68,68,1)]"
+                  : "border-main shadow-[6px_6px_0px_0px_rgba(255,200,0,1)] focus:translate-x-1 focus:translate-y-1 focus:shadow-none",
+              )}
+            >
+              <option value="preparing">🍳 Preparing</option>
+              <option value="out_for_delivery">🚀 Out for delivery</option>
+              <option value="delivered">✅ Delivered</option>
+              <option value="cancelled">❌ Cancelled</option>
+            </select>
 
-          {errors.status ? (
-            <span className="label text-xs text-red-500">
+            {/* Custom Arrow Decoration */}
+            <div className="text-main-btn pointer-events-none absolute top-1/2 right-5 -translate-y-1/2 font-black">
+              ↓
+            </div>
+          </div>
+
+          {errors.status && (
+            <span className="ml-2 text-[10px] font-bold tracking-wider text-red-500 uppercase">
               {errors.status.message}
-            </span>
-          ) : (
-            <span className="label text-text-dark text-xs opacity-70">
-              Please select the current stage of the order.
             </span>
           )}
         </fieldset>
 
-        <div className="border-main flex justify-end gap-2 border-t pt-4">
+        {/* Action Buttons */}
+        <div className="border-main/10 flex flex-col gap-3 border-t pt-4 sm:flex-row">
           <Button
             type="button"
             onClick={closeOrderStatusModal}
-            className="bg-gray-400 px-4 py-2 text-white hover:bg-gray-500"
+            className="bg-main-btn/5 text-main-btn/40 order-2 flex-1 rounded-2xl py-4 text-[10px] font-bold tracking-widest uppercase transition-all hover:bg-red-50 hover:text-red-500 sm:order-1"
           >
-            Cancel
+            Go Back
           </Button>
+
           <Button
             type="submit"
             disabled={isLoading}
-            className="bg-main-btn hover:bg-main-btn-hover min-w-25 px-6 py-2 text-white"
+            className="bg-main-btn hover:bg-main-btn-hover order-1 flex-[2] rounded-2xl py-4 font-black tracking-tighter text-white uppercase italic shadow-lg transition-all active:scale-95 disabled:opacity-50 sm:order-2"
           >
             {isLoading ? (
-              <div className="flex items-center gap-2">
-                <Spinner /> <span>Updating...</span>
+              <div className="flex items-center justify-center gap-3">
+                <Spinner /> <span className="animate-pulse">Updating...</span>
               </div>
             ) : (
-              "Update Status"
+              "Confirm Status Change"
             )}
           </Button>
         </div>
       </form>
+
+      <p className="text-main-btn/20 mt-6 text-center text-[10px] font-bold tracking-[0.2em] uppercase">
+        Studio Admin Dashboard 2026
+      </p>
     </div>
   );
 }
