@@ -2,6 +2,7 @@ import useDashboard from "../../shared/hooks/useDahboard";
 import type { Product } from "../../shared/schemas/productSchemas";
 import { cn } from "../../shared/utils/cn";
 import Item from "./Item";
+import NoProduct from "./NoProduct";
 
 type ContentProps = {
   data: Product[];
@@ -17,19 +18,7 @@ function Content({ data }: ContentProps) {
   const isList = menuActiveTab === 1;
   const isImage = menuActiveTab === 2;
 
-  if (data.length === 0)
-    return (
-      <div className="flex min-h-[60vh] items-center justify-center px-4 py-10">
-        <div className="bg-main/5 border-main/20 w-full max-w-lg rounded-4xl border-2 border-dashed p-12 text-center">
-          <p className="text-main-btn text-xl font-black tracking-tighter uppercase italic">
-            Kitchen is ready but no burgers found! <br />
-            <span className="text-sm font-bold tracking-normal opacity-60">
-              Start adding some delicious products.
-            </span>
-          </p>
-        </div>
-      </div>
-    );
+  if (data.length === 0) return <NoProduct />;
 
   return (
     <ul

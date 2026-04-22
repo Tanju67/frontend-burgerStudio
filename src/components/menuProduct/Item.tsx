@@ -2,13 +2,13 @@ import { FaEdit } from "react-icons/fa";
 import { MdDeleteForever } from "react-icons/md";
 import noImg from "../../assets/noImg.png";
 import useDashboard from "../../shared/hooks/useDahboard";
+import type { Product } from "../../shared/schemas/productSchemas";
+import { useGetCurrentUserQuery } from "../../shared/services/authApi";
 import { useDeleteProductMutation } from "../../shared/services/productApi";
 import Button from "../../shared/UIElements/button/Button";
 import Spinner from "../../shared/UIElements/spinner/Spinner";
 import { cn } from "../../shared/utils/cn";
 import { formatPrice } from "../../shared/utils/helper";
-import type { Product } from "../../shared/schemas/productSchemas";
-import { useGetCurrentUserQuery } from "../../shared/services/authApi";
 import { toaster } from "../../shared/utils/toaster";
 
 function Item({ _id, title, image, description, price }: Product) {

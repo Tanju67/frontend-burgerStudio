@@ -24,9 +24,12 @@ const imageSchema = z
   }, "Invalid file format");
 
 export const addProductSchema = z.object({
-  title: z.string().min(1, "Title is required"),
-  description: z.string().min(1, "Description is required"),
-  price: z.coerce.number().min(0.01, "Price must be greater than 0"),
+  title: z
+    .string()
+    .min(3, "Title must be at least 3 characters")
+    .max(100, "Title must be less than 100 characters"),
+  description: z.string().min(10, "Description must be at least 10 characters"),
+  price: z.coerce.number().positive("Price must be a positive number"),
   image: imageSchema,
 });
 
@@ -36,28 +39,35 @@ export const updateProductSchema = z
   .object({
     title: z
       .string()
-      .min(1, "Title cannot be empty")
+      .min(3, "Title must be at least 3 characters")
+      .max(100, "Title must be less than 100 characters")
       .optional()
       .or(z.literal("")),
+
     description: z
       .string()
-      .min(1, "Description cannot be empty")
+      .min(10, "Description must be at least 10 characters")
       .optional()
       .or(z.literal("")),
+
     price: z.coerce
       .number()
-      .min(0.01, "Price must be greater than 0")
+      .positive("Price must be a positive number")
       .optional(),
+
     image: imageSchema,
   })
   .refine(
-    (data) =>
-      data.title ||
-      data.description ||
-      data.price ||
-      (data.image && data.image.length > 0),
+    (data) => {
+      const hasTitle = data.title && data.title.trim().length > 0;
+      const hasDesc = data.description && data.description.trim().length > 0;
+      const hasPrice = data.price !== undefined;
+      const hasImage = data.image && data.image.length > 0;
+
+      return hasTitle || hasDesc || hasPrice || hasImage;
+    },
     {
-      message: "At least one field must be updated",
+      message: "At least one field must be updated with valid data",
       path: ["title"],
     },
   );

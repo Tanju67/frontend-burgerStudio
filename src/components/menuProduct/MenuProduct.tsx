@@ -3,9 +3,9 @@ import { ToastContainer } from "react-toastify";
 import useDashboard from "../../shared/hooks/useDahboard";
 import { useGetProductsByMenuQuery } from "../../shared/services/productApi";
 import DashboardProductSkeleton from "../../shared/skeletons/DashboardProductSkeleton";
-import Button from "../../shared/UIElements/button/Button";
 import DashboardNav from "../../shared/UIElements/dashboardNav/DashboardNav";
 import NavItem from "../../shared/UIElements/dashboardNav/NavItem";
+import IsError from "../../shared/UIElements/isError/IsError";
 import Modal from "../../shared/UIElements/modal/Modal";
 import { dashboardProductNavData } from "../../shared/utils/data";
 import AddProductForm from "./AddProductForm";
@@ -15,9 +15,7 @@ function MenuProduct() {
   const [searchParams] = useSearchParams();
   const title = searchParams.get("title");
   const menuId = useParams().id;
-  const { data, isLoading, isError, refetch } = useGetProductsByMenuQuery(
-    menuId!,
-  );
+  const { data, isLoading, isError } = useGetProductsByMenuQuery(menuId!);
   const {
     dashboard: { isProductModalOpen },
     closeProductModal,
@@ -29,19 +27,7 @@ function MenuProduct() {
   if (isLoading) {
     content = <DashboardProductSkeleton />;
   } else if (isError) {
-    content = (
-      <div className="flex min-h-[50vh] flex-col items-center justify-center text-center">
-        <h2 className="text-xl font-bold">Oops! Something went wrong.</h2>
-        <p className="text-gray-500">We couldn't load the menu.</p>
-        <Button
-          type="button"
-          onClick={() => refetch()}
-          className="bg-main-btn mt-4 px-4 py-2 text-white"
-        >
-          Try Again
-        </Button>
-      </div>
-    );
+    content = <IsError />;
   } else {
     content = <Content data={data ?? []} />;
   }

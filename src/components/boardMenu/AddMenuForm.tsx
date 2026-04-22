@@ -67,7 +67,6 @@ function AddMenuForm() {
       reset();
     } catch (error) {
       console.error(error);
-      toaster("error", "An unexpected error occurred");
     }
   };
 

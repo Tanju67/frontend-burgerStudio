@@ -8,7 +8,7 @@ import {
 import Button from "../../shared/UIElements/button/Button";
 import Spinner from "../../shared/UIElements/spinner/Spinner";
 import { useGetCurrentUserQuery } from "../../shared/services/authApi";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   addProductSchema,
@@ -35,7 +35,7 @@ function AddProductForm() {
     register,
     handleSubmit,
     reset,
-    watch,
+    control,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(
@@ -50,7 +50,10 @@ function AddProductForm() {
   });
 
   // Watch for image changes to show file name
-  const imageFile = watch("image");
+  const imageFile = useWatch({
+    control,
+    name: "image",
+  });
 
   useEffect(() => {
     if (editingProduct) {
@@ -83,7 +86,7 @@ function AddProductForm() {
       closeProductModal();
       reset();
     } catch (error) {
-      toaster("error", "Action failed. Check fields.");
+      console.error(error);
     }
   };
 
@@ -136,6 +139,11 @@ function AddProductForm() {
               step="0.01"
               className={inputStyles(errors.price)}
             />
+            {errors.price && (
+              <span className="ml-2 text-[10px] font-bold text-red-500 uppercase">
+                {errors.price.message as string}
+              </span>
+            )}
           </div>
 
           <div className="space-y-1">
@@ -175,6 +183,11 @@ function AddProductForm() {
             className={cn(inputStyles(errors.description), "resize-none")}
             placeholder="Describe the ingredients..."
           />
+          {errors.description && (
+            <span className="ml-2 text-[10px] font-bold text-red-500 uppercase">
+              {errors.description.message as string}
+            </span>
+          )}
         </div>
 
         {/* Action Button */}
