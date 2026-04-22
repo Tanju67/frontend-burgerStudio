@@ -1,14 +1,14 @@
 import { useEffect } from "react";
 import useDashboard from "../../shared/hooks/useDahboard";
 import { useGetMenusQuery } from "../../shared/services/menuApi";
-import DashboardMenuSkeleton from "../../shared/skeletons/DahboardMenuSkeleton";
-import Button from "../../shared/UIElements/button/Button";
+import DashboardMenuProductSkeleton from "../../shared/skeletons/DashboardMenuProductSkeleton";
 import DashboardNav from "../../shared/UIElements/dashboardNav/DashboardNav";
+import IsError from "../../shared/UIElements/isError/IsError";
 import ProductContent from "./ProductContent";
 
 function BoardProduct() {
   const { setMenuActiveTab } = useDashboard();
-  const { data, isLoading, isError, refetch } = useGetMenusQuery();
+  const { data, isLoading, isError } = useGetMenusQuery();
   useEffect(() => {
     setMenuActiveTab(0);
   }, [setMenuActiveTab]);
@@ -16,21 +16,9 @@ function BoardProduct() {
   let content;
 
   if (isLoading) {
-    content = <DashboardMenuSkeleton layout="image" lenght={8} />;
+    content = <DashboardMenuProductSkeleton length={8} />;
   } else if (isError) {
-    content = (
-      <div className="flex min-h-[50vh] flex-col items-center justify-center text-center">
-        <h2 className="text-xl font-bold">Oops! Something went wrong.</h2>
-        <p className="text-gray-500">We couldn't load the menu.</p>
-        <Button
-          type="button"
-          onClick={() => refetch()}
-          className="bg-main-btn mt-4 px-4 py-2 text-white"
-        >
-          Try Again
-        </Button>
-      </div>
-    );
+    content = <IsError />;
   } else {
     content = <ProductContent data={data ?? []} />;
   }
