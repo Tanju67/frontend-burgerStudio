@@ -1,7 +1,13 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
-import { FaEye, FaEyeSlash, FaLock } from "react-icons/fa";
+import {
+  FaEye,
+  FaEyeSlash,
+  FaLock,
+  FaUserShield,
+  FaUser,
+} from "react-icons/fa";
 import { IoMailSharp } from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
 import img from "../../assets/loginImg.jpg";
@@ -14,12 +20,12 @@ import { useLoginMutation } from "../../shared/services/authApi";
 import Button from "../../shared/UIElements/button/Button";
 import Spinner from "../../shared/UIElements/spinner/Spinner";
 import { toaster } from "../../shared/utils/toaster";
+import { cn } from "../../shared/utils/cn";
 
 function Form() {
   const [showPassword, setShowPassword] = useState(false);
   const [clickedBtn, setClickedBtn] = useState("");
   const navigate = useNavigate();
-
   const [loginUser, { isLoading }] = useLoginMutation();
 
   const {
@@ -31,15 +37,14 @@ function Form() {
     mode: "onTouched",
   });
 
-  // Form Submit Handler
   const onSubmit: SubmitHandler<LoginFormData> = async (values) => {
     try {
       const response = await loginUser(values).unwrap();
       localStorage.setItem("token", response.token);
       toaster("success", response.message);
-      setTimeout(() => navigate("/"), 2000);
-    } catch (err: unknown) {
-      console.log(err);
+      setTimeout(() => navigate("/"), 1500);
+    } catch (err: any) {
+      toaster("error", err?.data?.message || "Login failed");
     } finally {
       setClickedBtn("");
     }
@@ -55,132 +60,121 @@ function Form() {
   };
 
   return (
-    <div className="container-box">
-      <div className="bg-base-200 grid min-h-[80vh] grid-cols-1 items-center justify-center gap-12 px-4 py-8 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2">
-        <div className="flex flex-col items-center justify-center p-6 sm:p-12">
-          <div className="w-full max-w-md space-y-8">
-            <div className="mb-8 text-center">
-              <div className="group flex flex-col items-center gap-2">
-                <h1 className="text-text-dark mt-2 text-2xl font-bold">
-                  Welcome Back
-                </h1>
-                <p className="text-text-dark">Sign in to your account</p>
-              </div>
+    <div className="bg-bg flex min-h-screen items-center justify-center p-4 md:p-8">
+      <div className="bg-main-light border-main grid w-full max-w-6xl grid-cols-1 overflow-hidden rounded-[3rem] border-4 shadow-2xl lg:grid-cols-2">
+        <div className="relative flex flex-col items-center justify-center p-8 sm:p-16">
+          <div className="w-full max-w-md space-y-10">
+            <div className="space-y-2 text-center">
+              <h1 className="text-main-btn text-4xl font-black tracking-tighter uppercase italic">
+                Welcome Back
+              </h1>
+              <p className="text-main-dark/60 text-xs font-bold tracking-widest uppercase">
+                Ready for some delicious burgers?
+              </p>
             </div>
 
             <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text text-text-dark font-medium">
-                    Email
-                  </span>
+              {/* Email Input */}
+              <div className="space-y-2">
+                <label className="text-main-btn ml-2 text-xs font-black tracking-[0.2em] uppercase italic">
+                  Email Address
                 </label>
-                <div className="relative">
-                  <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                    <IoMailSharp className="text-base-content/40 z-10 size-5" />
+                <div className="group relative">
+                  <div className="absolute inset-y-0 left-0 flex items-center pl-4">
+                    <IoMailSharp className="text-main-btn size-5 transition-transform group-focus-within:scale-110" />
                   </div>
                   <input
                     type="email"
-                    className={`input input-bordered w-full pl-10`}
-                    placeholder="you@example.com"
+                    className="bg-main/5 border-main/20 text-main-btn focus:border-main-btn w-full rounded-2xl border-2 py-4 pr-4 pl-12 font-bold transition-all outline-none placeholder:opacity-30"
+                    placeholder="you@studio.com"
                     {...register("email")}
                   />
                 </div>
                 {errors.email && (
-                  <span className="mt-1 text-sm text-red-500">
+                  <p className="ml-2 text-[10px] font-black text-red-500 uppercase italic">
                     {errors.email.message}
-                  </span>
+                  </p>
                 )}
               </div>
 
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text text-text-dark font-medium">
-                    Password
-                  </span>
+              {/* Password Input */}
+              <div className="space-y-2">
+                <label className="text-main-btn ml-2 text-xs font-black tracking-[0.2em] uppercase italic">
+                  Security Code
                 </label>
-                <div className="relative">
-                  <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                    <FaLock className="text-base-content/40 z-10 size-5" />
+                <div className="group relative">
+                  <div className="absolute inset-y-0 left-0 flex items-center pl-4">
+                    <FaLock className="text-main-btn size-5 transition-transform group-focus-within:scale-110" />
                   </div>
                   <input
                     type={showPassword ? "text" : "password"}
-                    className={`input input-bordered w-full pl-10`}
+                    className="bg-main/5 border-main/20 text-main-btn focus:border-main-btn w-full rounded-2xl border-2 py-4 pr-12 pl-12 font-bold transition-all outline-none placeholder:opacity-30"
                     placeholder="••••••••"
                     {...register("password")}
                   />
                   <button
                     type="button"
-                    className="absolute inset-y-0 right-0 flex items-center pr-3"
+                    className="text-main-btn/40 hover:text-main-btn absolute inset-y-0 right-0 flex items-center pr-4 transition-colors"
                     onClick={() => setShowPassword(!showPassword)}
                   >
                     {showPassword ? (
-                      <FaEyeSlash className="text-base-content/40 z-10 size-5" />
+                      <FaEyeSlash size={20} />
                     ) : (
-                      <FaEye className="text-base-content/40 z-10 size-5" />
+                      <FaEye size={20} />
                     )}
                   </button>
                 </div>
                 {errors.password && (
-                  <span className="mt-1 text-sm text-red-500">
+                  <p className="ml-2 text-[10px] font-black text-red-500 uppercase italic">
                     {errors.password.message}
-                  </span>
+                  </p>
                 )}
               </div>
 
+              {/* Main Submit Button */}
               <Button
                 type="submit"
-                className="bg-main-btn hover:bg-main-btn-hover flex w-full items-center justify-center p-2"
+                className="bg-main-btn hover:bg-main-btn/90 h-14 w-full rounded-2xl text-lg font-black tracking-widest text-white uppercase italic shadow-lg transition-all active:scale-95"
                 disabled={isLoading}
                 onClick={() => setClickedBtn("login")}
               >
                 {isLoading && clickedBtn === "login" ? (
-                  <>
-                    <Spinner />
-                    Loading...
-                  </>
+                  <Spinner />
                 ) : (
-                  "Sign In "
+                  "Unlock Kitchen"
                 )}
               </Button>
-              <div className="flex gap-2">
+
+              {/* Demo Logins - Daha şık butonlar */}
+              <div className="grid grid-cols-2 gap-4 pt-2">
                 <Button
                   type="button"
                   disabled={isLoading}
                   onClick={() => handleDemoLogin("user")}
-                  className="flex w-[49%] items-center justify-center bg-blue-600 p-2 text-xs text-white hover:bg-blue-700 md:text-sm lg:text-base"
+                  className="flex items-center justify-center gap-2 rounded-xl border-2 border-blue-500/50 bg-blue-500/50 py-3 text-[10px] font-black tracking-widest text-blue-600 uppercase transition-all hover:bg-blue-500 hover:text-white"
                 >
-                  {isLoading && clickedBtn === "user" ? (
-                    <>
-                      <Spinner />
-                      Loading...
-                    </>
-                  ) : (
-                    "Demo User Login"
-                  )}
+                  <FaUser /> {clickedBtn === "user" ? "..." : "Demo User"}
                 </Button>
                 <Button
                   type="button"
                   disabled={isLoading}
                   onClick={() => handleDemoLogin("admin")}
-                  className="bg-secondary-btn hover:bg-secondary-btn-hover flex w-[49%] items-center justify-center p-2 text-xs"
+                  className="flex items-center justify-center gap-2 rounded-xl border-2 border-purple-500/50 bg-purple-500/50 py-3 text-[10px] font-black tracking-widest text-purple-600 uppercase transition-all hover:bg-purple-500 hover:text-white"
                 >
-                  {isLoading && clickedBtn === "admin" ? (
-                    <>
-                      <Spinner />
-                      Loading...
-                    </>
-                  ) : (
-                    "Demo Admin Login"
-                  )}
+                  <FaUserShield />{" "}
+                  {clickedBtn === "admin" ? "..." : "Demo Admin"}
                 </Button>
               </div>
             </form>
 
-            <div className="text-center">
-              <p className="text-text-dark">
-                Don&apos;t have an account?{" "}
-                <Link to="/register" className="link link-secondary">
+            {/* Footer Link */}
+            <div className="pt-4 text-center">
+              <p className="text-main-dark/50 text-xs font-bold tracking-widest uppercase">
+                New to the Studio?{" "}
+                <Link
+                  to="/register"
+                  className="text-main-btn decoration-2 underline-offset-4 hover:underline"
+                >
                   Create account
                 </Link>
               </p>
@@ -188,12 +182,19 @@ function Form() {
           </div>
         </div>
 
-        <div className="hidden items-center justify-center lg:flex">
+        <div className="bg-main relative hidden p-8 lg:block">
+          <div className="bg-main-btn/10 absolute inset-0 z-10 mix-blend-multiply" />
           <img
             src={img}
-            alt=""
-            className="max-h-[80%] rounded-4xl object-cover shadow-2xl"
+            alt="Burger"
+            className="h-full w-full rounded-4xl object-cover shadow-2xl grayscale-20 transition-all duration-700 hover:grayscale-0"
           />
+
+          <div className="absolute bottom-16 left-16 z-20">
+            <h2 className="text-6xl leading-none font-black tracking-tighter text-white uppercase italic drop-shadow-2xl">
+              Taste <br /> The <br /> Art.
+            </h2>
+          </div>
         </div>
       </div>
     </div>

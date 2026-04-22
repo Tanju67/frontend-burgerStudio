@@ -24,7 +24,7 @@ function MenuDetail() {
   }
 
   return (
-    <main className="bg-main-light bg-dashboard-pattern min-h-screen transition-colors duration-300">
+    <main className="min-h-screen transition-colors duration-300">
       <MainNav title={title} />
 
       <motion.div
