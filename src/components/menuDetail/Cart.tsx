@@ -1,5 +1,4 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { ToastContainer } from "react-toastify";
 import useCart from "../../shared/hooks/useCart";
 import Address from "./Address";
 import CartExtraList from "./CartExtraList";
@@ -63,15 +62,6 @@ function Cart() {
           )}
         </AnimatePresence>
       </div>
-
-      <ToastContainer
-        position="bottom-center"
-        autoClose={2000}
-        hideProgressBar
-        theme={
-          document.documentElement.classList.contains("dark") ? "dark" : "light"
-        }
-      />
     </div>
   );
 }

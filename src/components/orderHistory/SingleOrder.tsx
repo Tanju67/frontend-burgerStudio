@@ -1,25 +1,25 @@
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import { FaChevronDown, FaReceipt } from "react-icons/fa6";
+import type { Order } from "../../shared/schemas/orderSchemas";
 import { formatOrderDate, formatPrice } from "../../shared/utils/helper";
 import SingleOrderItem from "./SingleOrderItem";
-import type { Order } from "../../shared/schemas/orderSchemas";
 
 function SingleOrder({ _id, createdAt, status, orderItems }: Order) {
   const [showOrder, setShowOrder] = useState(false);
   const totalPrice = orderItems.reduce((acc, item) => acc + item.price, 0);
   const { date, time } = formatOrderDate(createdAt);
 
-  // Status badge colors
   const statusColors =
     {
-      pending: "bg-amber-500/10 text-amber-500 border-amber-500/20",
-      completed: "bg-emerald-500/10 text-emerald-500 border-emerald-500/20",
-      canceled: "bg-rose-500/10 text-rose-500 border-rose-500/20",
+      out_for_delivery: "bg-sky-500/10 text-sky-500 border-sky-500/20",
+      preparing: "bg-amber-500/10 text-amber-500 border-amber-500/20",
+      delivered: "bg-emerald-500/10 text-emerald-500 border-emerald-500/20",
+      cancelled: "bg-rose-500/10 text-rose-500 border-rose-500/20",
     }[status] || "bg-main/10 text-main-dark border-main/20";
 
   return (
-    <div className="bg-bg border-main/10 overflow-hidden rounded-[2rem] border shadow-sm transition-all hover:shadow-md">
+    <div className="bg-bg border-main/10 overflow-hidden rounded-4xl border shadow-sm transition-all hover:shadow-md">
       {/* Main Order Header */}
       <div className="p-6">
         <div className="flex flex-wrap items-start justify-between gap-4">

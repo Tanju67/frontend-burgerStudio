@@ -1,7 +1,7 @@
 import { IoArrowBackOutline } from "react-icons/io5";
+import { MdDarkMode, MdLightMode } from "react-icons/md";
 import { NavLink } from "react-router-dom";
 import useDarkMode from "../../shared/hooks/useDarkMode";
-import { MdDarkMode, MdLightMode } from "react-icons/md";
 
 function AdminNav() {
   const { darkMode, toggleDarkMode } = useDarkMode();

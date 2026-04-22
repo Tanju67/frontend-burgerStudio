@@ -10,7 +10,7 @@ function RootLayout() {
   const { cart, setCartModal } = useCart();
   return (
     <div>
-      <main className="font-primary bg-main-light bg-dashboard-pattern flex min-h-screen flex-col scroll-smooth">
+      <main className="font-primary bg-main-light flex min-h-screen flex-col scroll-smooth">
         <div className="flex-1 pt-26 antialiased md:pt-47.5">
           <ScrollToTop />
           <Outlet />

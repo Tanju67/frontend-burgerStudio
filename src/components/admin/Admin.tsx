@@ -3,7 +3,7 @@ import DashBoard from "./DashBoard";
 
 function Admin() {
   return (
-    <main className="bg-main-light mt-0 p-2 md:-mt-47.5">
+    <main className="bg-main-light -mt-34.5 p-2">
       <AdminNav />
       <DashBoard />
     </main>

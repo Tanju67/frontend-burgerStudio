@@ -1,6 +1,7 @@
 import { useGetMyOrdersQuery } from "../../shared/services/orderApi";
-import MenuSkeleton from "../../shared/skeletons/MenuSkeleton";
+import OrderHistorySkeleton from "../../shared/skeletons/OrderHistorySkeleton";
 import IsError from "../../shared/UIElements/isError/IsError";
+import NoOrder from "./NoOrder";
 import OrderContent from "./OrderContent";
 
 function Orders() {
@@ -8,21 +9,11 @@ function Orders() {
 
   let content;
   if (isLoading) {
-    content = <MenuSkeleton />;
+    content = <OrderHistorySkeleton />;
   } else if (isError) {
     content = <IsError />;
   } else if (data?.length === 0) {
-    content = (
-      <div className="flex flex-col items-center justify-center py-2 text-center">
-        <span className="mb-4 text-6xl">🍔</span>
-        <h2 className="text-text-dark text-xl font-black uppercase italic">
-          No orders yet!
-        </h2>
-        <p className="text-main-dark mt-2 text-sm">
-          Time to taste our delicious burgers.
-        </p>
-      </div>
-    );
+    content = <NoOrder />;
   } else {
     content = <OrderContent data={data ?? []} />;
   }
