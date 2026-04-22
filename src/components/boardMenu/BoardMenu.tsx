@@ -3,9 +3,9 @@ import { ToastContainer } from "react-toastify";
 import useDashboard from "../../shared/hooks/useDahboard";
 import { useGetMenusQuery } from "../../shared/services/menuApi";
 import DashboardMenuSkeleton from "../../shared/skeletons/DahboardMenuSkeleton";
-import Button from "../../shared/UIElements/button/Button";
 import DashboardNav from "../../shared/UIElements/dashboardNav/DashboardNav";
 import NavItem from "../../shared/UIElements/dashboardNav/NavItem";
+import IsError from "../../shared/UIElements/isError/IsError";
 import Modal from "../../shared/UIElements/modal/Modal";
 import { dashboardMenuNavData } from "../../shared/utils/data";
 import AddMenuForm from "./AddMenuForm";
@@ -18,7 +18,7 @@ function BoardMenu() {
     setMenuActiveTab,
   } = useDashboard();
 
-  const { data, isLoading, isError, refetch } = useGetMenusQuery();
+  const { data, isLoading, isError } = useGetMenusQuery();
 
   useEffect(() => {
     setMenuActiveTab(0);
@@ -29,19 +29,7 @@ function BoardMenu() {
   if (isLoading) {
     content = <DashboardMenuSkeleton />;
   } else if (isError) {
-    content = (
-      <div className="flex min-h-[50vh] flex-col items-center justify-center text-center">
-        <h2 className="text-xl font-bold">Oops! Something went wrong.</h2>
-        <p className="text-gray-500">We couldn't load the menu.</p>
-        <Button
-          type="button"
-          onClick={() => refetch()}
-          className="bg-main-btn mt-4 px-4 py-2 text-white"
-        >
-          Try Again
-        </Button>
-      </div>
-    );
+    content = <IsError />;
   } else {
     content = <MenuContent data={data ?? []} />;
   }

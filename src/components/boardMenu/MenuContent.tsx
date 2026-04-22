@@ -2,6 +2,7 @@ import useDashboard from "../../shared/hooks/useDahboard";
 import type { Menu } from "../../shared/schemas/menuSchemas";
 import { cn } from "../../shared/utils/cn";
 import Item from "./Item";
+import NoMenu from "./NoMenu";
 
 type MenuContentProps = {
   data: Menu[];
@@ -16,14 +17,7 @@ function MenuContent({ data }: MenuContentProps) {
   const isList = menuActiveTab === 1;
   const isImage = menuActiveTab === 2;
 
-  if (data.length === 0)
-    return (
-      <div className="bg-main/5 border-main/20 animate-in fade-in zoom-in flex h-[60vh] flex-col items-center justify-center rounded-3xl border-2 border-dashed p-8 duration-500">
-        <p className="text-main-btn text-center font-black tracking-widest uppercase italic opacity-60">
-          The kitchen is empty. <br /> Please add a new menu.
-        </p>
-      </div>
-    );
+  if (data.length === 0) return <NoMenu />;
 
   return (
     <ul
