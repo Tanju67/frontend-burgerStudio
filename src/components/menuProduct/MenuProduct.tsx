@@ -1,5 +1,4 @@
 import { useParams, useSearchParams } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
 import useDashboard from "../../shared/hooks/useDahboard";
 import { useGetProductsByMenuQuery } from "../../shared/services/productApi";
 import DashboardProductSkeleton from "../../shared/skeletons/DashboardProductSkeleton";
@@ -51,8 +50,6 @@ function MenuProduct() {
       >
         <AddProductForm />
       </Modal>
-
-      <ToastContainer />
     </div>
   );
 }

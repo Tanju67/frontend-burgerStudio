@@ -17,7 +17,7 @@ function OrderTableContent({ data }: OrderTableItemProps) {
             <th className="px-4 py-2">Address</th>
             <th className="px-4 py-2">Status</th>
             <th className="px-4 py-2">Total</th>
-            <th className="px-4 py-2 text-center">Actions</th>
+            <th className="px-4 py-2">Actions</th>
           </tr>
         </thead>
         <tbody className="flex flex-col gap-4 md:table-row-group">

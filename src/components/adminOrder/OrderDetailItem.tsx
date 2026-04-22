@@ -8,7 +8,7 @@ function OrderDetailItem({ product, amount, price }: OrderItem) {
   const image = product?.image || noImg;
 
   return (
-    <li className="border-main/20 group hover:border-main flex items-center justify-between rounded-2xl border-2 bg-white p-3 transition-colors">
+    <li className="border-main/20 group hover:border-main bg-main-light flex items-center justify-between rounded-2xl border-2 p-3 transition-colors">
       <div className="flex items-center gap-3">
         {/* Product Thumbnail */}
         <div className="bg-main/5 border-main/10 h-14 w-14 shrink-0 overflow-hidden rounded-xl border">
@@ -24,7 +24,7 @@ function OrderDetailItem({ product, amount, price }: OrderItem) {
           <span className="text-main-btn text-sm leading-none font-black tracking-tighter uppercase italic">
             {title}
           </span>
-          <span className="mt-1 text-[10px] font-bold opacity-50">
+          <span className="text-main-dark mt-1 text-[10px] font-bold opacity-50">
             Unit: {formatPrice(price)}
           </span>
         </div>

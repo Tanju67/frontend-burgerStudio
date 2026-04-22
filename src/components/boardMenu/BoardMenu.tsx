@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { ToastContainer } from "react-toastify";
 import useDashboard from "../../shared/hooks/useDahboard";
 import { useGetMenusQuery } from "../../shared/services/menuApi";
 import DashboardMenuSkeleton from "../../shared/skeletons/DahboardMenuSkeleton";
@@ -53,8 +52,6 @@ function BoardMenu() {
       >
         <AddMenuForm />
       </Modal>
-
-      <ToastContainer />
     </div>
   );
 }

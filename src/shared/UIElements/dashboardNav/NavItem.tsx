@@ -108,14 +108,14 @@ function NavItem({
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="bg-main-dark/20 fixed inset-0 z-40 backdrop-blur-sm"
+              className="bg-main-dark/20 fixed inset-0 z-100 backdrop-blur-sm"
               onClick={() => setIsNavOpen(false)}
             />
             <motion.ul
               initial={{ opacity: 0, y: -20, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -20, scale: 0.95 }}
-              className="bg-bg border-main absolute top-12 right-0 z-50 flex w-60 flex-col gap-2 rounded-2xl border-2 p-3 shadow-2xl"
+              className="bg-bg border-main absolute top-12 right-0 z-110 flex w-60 flex-col gap-2 rounded-2xl border-2 p-3 shadow-2xl"
             >
               {data.map((item) => {
                 const Icon = item.icon;

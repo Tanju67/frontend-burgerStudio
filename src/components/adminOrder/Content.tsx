@@ -1,4 +1,3 @@
-import { ToastContainer } from "react-toastify";
 import useDashboard from "../../shared/hooks/useDahboard";
 import Modal from "../../shared/UIElements/modal/Modal";
 import OrderDetail from "./OrderDetail";
@@ -12,7 +11,7 @@ function Content() {
     closeOrderStatusModal,
   } = useDashboard();
   return (
-    <div className="overflow-scroll">
+    <div className="h-[80vh] overflow-y-auto">
       <OrderTable />
 
       <Modal
@@ -30,8 +29,6 @@ function Content() {
       >
         <OrderDetail />
       </Modal>
-
-      <ToastContainer />
     </div>
   );
 }

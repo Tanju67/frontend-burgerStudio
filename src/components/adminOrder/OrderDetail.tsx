@@ -20,7 +20,7 @@ function OrderDetail() {
           Order Items
         </h2>
         <p className="text-[10px] font-bold tracking-[0.3em] uppercase opacity-40">
-          Studio Kitchen Summary
+          Burger Studio Summary
         </p>
       </div>
 

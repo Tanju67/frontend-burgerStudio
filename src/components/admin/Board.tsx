@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 
 function Board() {
   return (
-    <div className="bg-bg text-text-dark border-main/10 col-span-4 mt-35 min-h-[60vh] overflow-hidden rounded-2xl border shadow-xl transition-colors duration-300 sm:mt-0 md:min-h-full">
+    <div className="bg-bg text-text-dark border-main/10 col-span-4 mt-37 min-h-[80vh] overflow-hidden rounded-2xl border shadow-xl transition-colors duration-300 sm:mt-0 md:min-h-full">
       <div className="bg-main/30 border-main/10 flex items-center justify-between border-b px-6 py-3">
         <span className="text-main-btn text-[10px] font-black tracking-[0.2em] uppercase italic">
           Studio Management Console

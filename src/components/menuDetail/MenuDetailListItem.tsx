@@ -1,13 +1,11 @@
 import { BsInfoCircle } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
 import noImg from "../../assets/noImg.png";
 import Button from "../../shared/UIElements/button/Button";
 import useCart from "../../shared/hooks/useCart";
 import type { Product } from "../../shared/schemas/productSchemas";
 import { useGetCurrentUserQuery } from "../../shared/services/authApi";
 import { toaster } from "../../shared/utils/toaster";
-import useDarkMode from "../../shared/hooks/useDarkMode";
 
 function MenuDetailListItem({
   _id,
@@ -18,7 +16,6 @@ function MenuDetailListItem({
   setShowModal,
 }: Product & { setShowModal: (isOpen: boolean) => void }) {
   const { setCartModal, setProduct, addToCart, setActiveCart } = useCart();
-  const { darkMode } = useDarkMode();
   const { data: user } = useGetCurrentUserQuery();
   const navigate = useNavigate();
 

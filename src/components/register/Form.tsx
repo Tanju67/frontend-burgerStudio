@@ -4,7 +4,6 @@ import { useForm, type SubmitHandler } from "react-hook-form";
 import { FaEye, FaEyeSlash, FaLock, FaUser } from "react-icons/fa";
 import { IoMailSharp } from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
 
 import img from "../../assets/registerImg.jpg";
 import Button from "../../shared/UIElements/button/Button";

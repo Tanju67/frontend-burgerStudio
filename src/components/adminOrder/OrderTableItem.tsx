@@ -25,7 +25,7 @@ function OrderTableItem({
   );
 
   return (
-    <tr className="border-main md:border-main/20 group flex flex-col overflow-hidden rounded-4xl border-2 bg-white text-black shadow-sm transition-all hover:shadow-md md:table-row md:rounded-none">
+    <tr className="border-main md:border-main/20 group bg-main-light text-main-dark flex flex-col overflow-hidden rounded-4xl border-2 shadow-sm transition-all hover:shadow-md md:table-row md:rounded-none">
       {/* Index - Hidden on Mobile, shown as a badge or tag if needed */}
       <td className="text-main-btn/40 hidden px-4 py-4 text-lg font-black italic md:table-cell">
         {index + 1}
@@ -68,8 +68,10 @@ function OrderTableItem({
             <span
               className={cn(
                 "bg-main text-main-btn rounded-full px-3 py-1 text-[10px] font-black tracking-widest uppercase italic",
-                status === "preparing" && "bg-orange-100 text-orange-600",
-                status === "delivered" && "bg-green-100 text-green-600",
+                status === "preparing" && "bg-orange-300 text-orange-600",
+                status === "delivered" && "bg-green-300 text-green-600",
+                status === "cancelled" && "bg-red-300 text-red-600",
+                status === "out_for_delivery" && "bg-blue-300 text-blue-600",
               )}
             >
               {status}
@@ -98,15 +100,17 @@ function OrderTableItem({
       </td>
 
       {/* Order Detail Button */}
-      <td className="px-6 py-4 text-center md:px-4">
-        <Button
-          type="button"
-          onClick={() => openOrderDetailModal(orderItems)}
-          className="bg-main border-main hover:bg-main-btn hover:text-text-light! flex w-full items-center justify-center gap-2 rounded-xl border-2 px-4 py-2 text-xs font-black tracking-tighter text-black! uppercase italic transition-all active:scale-95 md:w-auto md:px-6 md:py-3 md:text-base! dark:text-white!"
-        >
-          <FaEye />
-          <span>View Order</span>
-        </Button>
+      <td className="px-6 py-4 md:px-4">
+        <div className="flex items-center justify-between md:justify-start">
+          <Button
+            type="button"
+            onClick={() => openOrderDetailModal(orderItems)}
+            className="bg-main border-main hover:bg-main-btn hover:text-text-light! flex w-full items-center justify-center gap-2 rounded-xl border-2 px-4 py-2 text-xs font-black tracking-tighter text-black! uppercase italic transition-all active:scale-95 md:w-auto md:px-6 md:py-3 md:text-base! dark:text-white!"
+          >
+            <FaEye />
+            <span>View Order</span>
+          </Button>
+        </div>
       </td>
     </tr>
   );

@@ -1,16 +1,16 @@
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import useDashboard from "../../shared/hooks/useDahboard";
-import { useUpdateOrderStatusMutation } from "../../shared/services/orderApi";
+import { useForm } from "react-hook-form";
 import Button from "../../shared/UIElements/button/Button";
+import Spinner from "../../shared/UIElements/spinner/Spinner";
+import useDashboard from "../../shared/hooks/useDahboard";
 import {
   updateOrderStatusSchema,
   type UpdateOrderStatus,
 } from "../../shared/schemas/orderSchemas";
-import { toaster } from "../../shared/utils/toaster";
-import Spinner from "../../shared/UIElements/spinner/Spinner";
 import { useGetCurrentUserQuery } from "../../shared/services/authApi";
+import { useUpdateOrderStatusMutation } from "../../shared/services/orderApi";
 import { cn } from "../../shared/utils/cn";
+import { toaster } from "../../shared/utils/toaster";
 
 function StatusUpdateForm() {
   const {
@@ -52,8 +52,7 @@ function StatusUpdateForm() {
       toaster("success", "Order status updated");
       closeOrderStatusModal();
     } catch (error: any) {
-      const msg = error?.data?.message || "Failed to update status";
-      toaster("error", msg);
+      console.log(error);
     }
   };
 
@@ -115,7 +114,7 @@ function StatusUpdateForm() {
           <Button
             type="submit"
             disabled={isLoading}
-            className="bg-main-btn hover:bg-main-btn-hover order-1 flex-[2] rounded-2xl py-4 font-black tracking-tighter text-white uppercase italic shadow-lg transition-all active:scale-95 disabled:opacity-50 sm:order-2"
+            className="bg-main-btn hover:bg-main-btn-hover order-1 flex-2 rounded-2xl py-4 font-black tracking-tighter text-white uppercase italic shadow-lg transition-all active:scale-95 disabled:opacity-50 sm:order-2"
           >
             {isLoading ? (
               <div className="flex items-center justify-center gap-3">
