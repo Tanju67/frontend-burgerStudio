@@ -95,6 +95,10 @@ const router = createBrowserRouter([
         path: "register",
         element: <RegisterPage />,
       },
+      {
+        path: "*",
+        element: <ErrorPage />,
+      },
     ],
   },
 ]);

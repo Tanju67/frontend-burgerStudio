@@ -16,6 +16,7 @@ export const rtkQueryErrorLogger: Middleware = () => (next) => (action) => {
     const metaArg = action.meta && (action.meta as any).arg;
     const endpointName = metaArg?.endpointName;
 
+    console.log("DEBUG ERROR PAYLOAD:", payload);
     // 1. SESSİZ Hatalar (Kullanıcıya hiçbir şey gösterme)
     if (endpointName === "getCurrentUser") {
       return next(action);
