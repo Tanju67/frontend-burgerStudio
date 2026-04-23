@@ -156,7 +156,7 @@ function RegisterForm() {
               {/* Submit Button */}
               <Button
                 type="submit"
-                className="bg-main-btn hover:bg-main-btn/90 mt-4 h-14 w-full rounded-2xl text-lg font-black tracking-widest text-white uppercase italic shadow-lg transition-all active:scale-95"
+                className="bg-main-btn hover:bg-main-btn/90 mt-4 flex h-14 w-full items-center justify-center gap-2 rounded-2xl text-lg font-black tracking-widest text-white uppercase italic shadow-lg transition-all active:scale-95"
                 disabled={isLoading}
               >
                 {isLoading ? (

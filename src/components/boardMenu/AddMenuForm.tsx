@@ -56,7 +56,8 @@ function AddMenuForm() {
       }
 
       if (editingMenu) {
-        await updateMenu({ id: editingMenu._id, data: fd }).unwrap();
+        // await updateMenu({ id: editingMenu._id, data: fd }).unwrap();
+        updateMenu({ id: editingMenu._id, data: fd }).unwrap();
         toaster("success", "Menu updated successfully");
       } else {
         await createMenu(fd).unwrap();

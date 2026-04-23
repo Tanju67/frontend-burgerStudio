@@ -24,13 +24,12 @@ function Item(props: Menu) {
   const deleteMenuHandler = async () => {
     if (isTestAdmin)
       return toaster("warning", "Test admin cannot delete items.");
-    if (!confirm("Are you sure?")) return;
 
     try {
-      await deleteMenu(_id).unwrap();
+      deleteMenu(_id).unwrap();
       toaster("success", "Menu deleted");
     } catch (error) {
-      toaster("error", "Failed to delete menu");
+      console.log(error);
     }
   };
 

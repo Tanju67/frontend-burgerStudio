@@ -25,6 +25,13 @@ export const rtkQueryErrorLogger: Middleware = () => (next) => (action) => {
     const message =
       payload.data?.message || payload.error || "An unexpected error occurred";
 
+    const excludedEndpoints = ["deleteMenu", "updateMenu"];
+
+    if (excludedEndpoints.includes(endpointName)) {
+      console.warn(`${endpointName} error: ${message}`);
+      return next(action);
+    }
+
     // 2. ERROR PAGE (Fatal Errors)
     // 404: Sayfa yok, 500+: Sunucu patlamış
     if (typeof status === "number" && (status >= 500 || status === 404)) {

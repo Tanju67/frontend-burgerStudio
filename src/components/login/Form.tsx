@@ -134,7 +134,7 @@ function Form() {
               {/* Main Submit Button */}
               <Button
                 type="submit"
-                className="bg-main-btn hover:bg-main-btn/90 h-14 w-full rounded-2xl text-lg font-black tracking-widest text-white uppercase italic shadow-lg transition-all active:scale-95"
+                className="bg-main-btn hover:bg-main-btn/90 flex h-14 w-full items-center justify-center gap-2 rounded-2xl text-lg font-black tracking-widest text-white uppercase italic shadow-lg transition-all active:scale-95"
                 disabled={isLoading}
                 onClick={() => setClickedBtn("login")}
               >
@@ -161,7 +161,7 @@ function Form() {
                   onClick={() => handleDemoLogin("admin")}
                   className="flex items-center justify-center gap-2 rounded-xl border-2 border-purple-500/50 bg-purple-500/50 py-3 text-[10px] font-black tracking-widest text-purple-600 uppercase transition-all hover:bg-purple-500 hover:text-white"
                 >
-                  <FaUserShield />{" "}
+                  <FaUserShield />
                   {clickedBtn === "admin" ? "..." : "Demo Admin"}
                 </Button>
               </div>
