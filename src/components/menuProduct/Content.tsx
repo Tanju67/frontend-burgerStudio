@@ -37,6 +37,7 @@ function Content({ data }: ContentProps) {
           image={item.image}
           description={item.description}
           price={item.price}
+          menu={item.menu}
         />
       ))}
     </ul>

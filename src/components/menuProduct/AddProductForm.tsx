@@ -77,7 +77,11 @@ function AddProductForm() {
       if (data.image?.[0]) fd.append("image", data.image[0]);
 
       if (editingProduct) {
-        await updateProduct({ id: editingProduct._id, data: fd }).unwrap();
+        updateProduct({
+          id: editingProduct._id,
+          menuId: id!,
+          data: fd,
+        }).unwrap();
         toaster("success", "Product updated!");
       } else {
         await createProduct({ menuId: id!, data: fd }).unwrap();

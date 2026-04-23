@@ -11,7 +11,7 @@ import { cn } from "../../shared/utils/cn";
 import { formatPrice } from "../../shared/utils/helper";
 import { toaster } from "../../shared/utils/toaster";
 
-function Item({ _id, title, image, description, price }: Product) {
+function Item({ _id, title, image, description, price, menu }: Product) {
   const { data: user } = useGetCurrentUserQuery();
   const {
     dashboard: { menuActiveTab },
@@ -27,9 +27,11 @@ function Item({ _id, title, image, description, price }: Product) {
   const deleteProductHandler = async () => {
     if (isTestAdmin)
       return toaster("warning", "Test admin cannot delete items.");
-    if (!confirm("Are you sure?")) return;
     try {
-      await deleteProduct(_id).unwrap();
+      deleteProduct({
+        productId: _id,
+        menuId: (menu as { _id: string })._id,
+      }).unwrap();
       toaster("success", "Product deleted");
     } catch (error) {
       console.log(error);

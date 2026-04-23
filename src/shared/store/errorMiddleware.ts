@@ -25,7 +25,12 @@ export const rtkQueryErrorLogger: Middleware = () => (next) => (action) => {
     const message =
       payload.data?.message || payload.error || "An unexpected error occurred";
 
-    const excludedEndpoints = ["deleteMenu", "updateMenu"];
+    const excludedEndpoints = [
+      "deleteMenu",
+      "updateMenu",
+      "deleteProduct",
+      "updateProduct",
+    ];
 
     if (excludedEndpoints.includes(endpointName)) {
       console.warn(`${endpointName} error: ${message}`);

@@ -11,6 +11,7 @@ import { toaster } from "../../shared/utils/toaster";
 function Item(props: Menu) {
   const { _id, title, image } = props;
   const [deleteMenu, { isLoading }] = useDeleteMenuMutation();
+
   const { data: user } = useGetCurrentUserQuery();
   const {
     dashboard: { menuActiveTab },

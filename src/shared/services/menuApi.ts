@@ -78,7 +78,7 @@ export const menuApi = baseApi.injectEndpoints({
         } catch {
           // await new Promise((res) => setTimeout(res, 5000));
           patchResult.undo();
-          toaster("error", "Menu update failed!");
+          toaster("error", "Menu update failed! Changes reverted.");
         }
       },
       invalidatesTags: (_result, error, { id }) => {
@@ -107,7 +107,7 @@ export const menuApi = baseApi.injectEndpoints({
         } catch {
           await new Promise((res) => setTimeout(res, 5000));
           patchResult.undo();
-          toaster("error", "Menu delete failed!");
+          toaster("error", "Menu delete failed! Changes reverted.");
         }
       },
       invalidatesTags: (_result, error, { id }) => {
