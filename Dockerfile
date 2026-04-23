@@ -1,14 +1,10 @@
-# 1. AŞAMA: Projeyi Build Etme (Derleme)
-FROM node:20-slim AS build-stage
-WORKDIR /app
-COPY package*.json ./
-RUN npm install
-COPY . .
-RUN npm run build
-
-# 2. AŞAMA: Sunucuya Koyma (Nginx)
+# Sadece Nginx kullanıyoruz, inşaat (build) aşamasını sildik!
 FROM nginx:stable-alpine
-# Vite'ın ürettiği 'dist' klasörünü Nginx'in yayın klasörüne taşıyoruz
-COPY --from=build-stage /app/dist /usr/share/nginx/html
+
+# Senin bilgisayarında oluşacak olan 'dist' klasörünü doğrudan içeri alıyoruz
+COPY dist /usr/share/nginx/html
+
+# Nginx standart olarak 80 portunda çalışır
 EXPOSE 80
+
 CMD ["nginx", "-g", "daemon off;"]
