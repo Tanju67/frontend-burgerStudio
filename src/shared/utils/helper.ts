@@ -1,4 +1,3 @@
-import type { FieldError } from "react-hook-form";
 import type { Order } from "../schemas/orderSchemas";
 
 export const formatOrderDate = (isoDate: string) => {

@@ -14,13 +14,7 @@ type NavItemProps = {
   breakPoint?: boolean;
 };
 
-function NavItem({
-  data,
-  isBtnVisible,
-  btnTitle,
-  isLink,
-  breakPoint,
-}: NavItemProps) {
+function NavItem({ data, isBtnVisible, btnTitle, breakPoint }: NavItemProps) {
   const {
     dashboard: { menuActiveTab },
     setMenuActiveTab,

@@ -1,12 +1,11 @@
-import { data } from "react-router-dom";
 import {
   menuSchema,
   type AddMenu,
   type Menu,
   type UpdateMenuForm,
 } from "../schemas/menuSchemas";
-import { baseApi } from "./baseApi";
 import { toaster } from "../utils/toaster";
+import { baseApi } from "./baseApi";
 
 export const menuApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({

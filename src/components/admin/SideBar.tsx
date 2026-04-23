@@ -1,8 +1,8 @@
-import { Link, NavLink } from "react-router-dom";
-import { MdMenuBook, MdOutlineBorderColor } from "react-icons/md";
 import { FaProductHunt } from "react-icons/fa";
-import logoLight from "../../assets/logo-light.png";
+import { MdMenuBook, MdOutlineBorderColor } from "react-icons/md";
+import { Link } from "react-router-dom";
 import logoDark from "../../assets/logo-dark.png";
+import logoLight from "../../assets/logo-light.png";
 import useDarkMode from "../../shared/hooks/useDarkMode";
 import SidebarItem from "./SidebarItem";
 
