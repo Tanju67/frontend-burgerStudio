@@ -44,9 +44,9 @@ function StatusUpdateForm() {
     }
 
     try {
-      await updateOrderStatus({
+      updateOrderStatus({
         id: orderId,
-        status: data.status,
+        status: { status: data.status },
       }).unwrap();
 
       toaster("success", "Order status updated");

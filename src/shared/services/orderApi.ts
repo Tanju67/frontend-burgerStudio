@@ -5,7 +5,9 @@ import {
   type CreateOrderResponse,
   type Order,
   type UpdateAddressResponse,
+  type UpdateOrderStatus,
 } from "../schemas/orderSchemas";
+import { toaster } from "../utils/toaster";
 import { baseApi } from "./baseApi";
 
 export const orderApi = baseApi.injectEndpoints({
@@ -93,17 +95,42 @@ export const orderApi = baseApi.injectEndpoints({
       ],
     }),
 
-    updateOrderStatus: builder.mutation<Order, { id: string; status: string }>({
+    updateOrderStatus: builder.mutation<
+      Order,
+      { id: string; status: UpdateOrderStatus }
+    >({
       query: ({ id, status }) => ({
         url: `/order/${id}/status`,
         method: "PATCH",
         body: { status },
       }),
-      invalidatesTags: (_result, _error, { id }) => [
-        { type: "Order", id },
-        { type: "Order", id: "LIST" },
-        { type: "Order", id: "MY_LIST" },
-      ],
+
+      async onQueryStarted({ id, status }, { dispatch, queryFulfilled }) {
+        const patchResult = dispatch(
+          orderApi.util.updateQueryData("getAllOrders", undefined, (draft) => {
+            const order = draft.find((o: any) => o._id === id);
+            if (order) {
+              order.status = status.status;
+            }
+          }),
+        );
+
+        try {
+          await queryFulfilled;
+        } catch {
+          await new Promise((res) => setTimeout(res, 5000));
+          patchResult.undo();
+          toaster("error", "Failed to update order status! Changes reverted.");
+        }
+      },
+
+      invalidatesTags: (_result, error, { id }) => {
+        if (error) return [];
+        return [
+          { type: "Order", id },
+          { type: "Order", id: "LIST" },
+        ];
+      },
     }),
 
     updateAddress: builder.mutation<

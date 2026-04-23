@@ -30,6 +30,7 @@ export const rtkQueryErrorLogger: Middleware = () => (next) => (action) => {
       "updateMenu",
       "deleteProduct",
       "updateProduct",
+      "updateOrderStatus",
     ];
 
     if (excludedEndpoints.includes(endpointName)) {
