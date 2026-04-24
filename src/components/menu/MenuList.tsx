@@ -1,11 +1,13 @@
 import type { Menu } from "../../shared/schemas/menuSchemas";
 import MenuListItem from "./MenuListItem";
+import NoMenu from "./NoMenu";
 
 type MenuListProps = {
   menuData: Menu[];
 };
 
 function MenuList({ menuData }: MenuListProps) {
+  if (menuData.length === 0) return <NoMenu />;
   return (
     <ul className="grid grid-cols-1 gap-4 py-4 md:mt-0 md:min-h-[90vh] md:grid-cols-2">
       {menuData.map((item) => (

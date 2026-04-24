@@ -13,9 +13,9 @@ function NoMenu({ isLink }: { isLink?: boolean }) {
     }
   };
   return (
-    <div className="bg-main/5 border-main/20 animate-in fade-in zoom-in mx-auto flex min-h-[500px] w-full max-w-2xl flex-col items-center justify-center rounded-[2.5rem] border-2 border-dashed p-8 duration-500 md:p-12">
+    <div className="bg-main/5 border-main/20 animate-in fade-in zoom-in mx-auto flex min-h-125 w-full max-w-2xl flex-col items-center justify-center rounded-[2.5rem] border-2 border-dashed p-8 duration-500 md:p-12">
       {/* İkon Bölümü */}
-      <div className="bg-main-light mb-6 flex h-24 w-24 items-center justify-center rounded-[2rem] text-5xl shadow-inner shadow-black/5">
+      <div className="bg-main-light mb-6 flex h-24 w-24 items-center justify-center rounded-4xl text-5xl shadow-inner shadow-black/5">
         <span className="drop-shadow-sm">👨‍🍳</span>
       </div>
 

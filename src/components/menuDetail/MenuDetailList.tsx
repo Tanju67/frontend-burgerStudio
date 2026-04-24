@@ -5,6 +5,7 @@ import type { Product } from "../../shared/schemas/productSchemas";
 import Modal from "../../shared/UIElements/modal/Modal";
 import MenuDetailListItem from "./MenuDetailListItem";
 import ProductInfo from "./ProductInfo";
+import NoProducts from "./NoProduct";
 
 interface MenuDetailListProps {
   data: Product[];
@@ -13,6 +14,8 @@ interface MenuDetailListProps {
 function MenuDetailList({ data }: MenuDetailListProps) {
   const [showModal, setShowModal] = useState<boolean>(false);
   const { cart } = useCart();
+
+  if (data.length === 0) return <NoProducts />;
 
   return (
     <ul className="grid gap-4 py-4 sm:grid-cols-2 md:mt-0 md:min-h-[50vh] lg:grid-cols-3">
