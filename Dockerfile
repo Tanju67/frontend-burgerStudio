@@ -1,10 +1,11 @@
-# Sadece Nginx kullanıyoruz, inşaat (build) aşamasını sildik!
 FROM nginx:stable-alpine
 
-# Senin bilgisayarında oluşacak olan 'dist' klasörünü doğrudan içeri alıyoruz
+# Senin yaptığın:
 COPY dist /usr/share/nginx/html
 
-# Nginx standart olarak 80 portunda çalışır
+# EKSİK OLAN VE EKLEMEN GEREKEN:
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
 EXPOSE 80
 
 CMD ["nginx", "-g", "daemon off;"]
