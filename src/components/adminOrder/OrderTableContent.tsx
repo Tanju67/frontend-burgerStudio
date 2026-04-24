@@ -7,7 +7,7 @@ type OrderTableItemProps = {
 
 function OrderTableContent({ data }: OrderTableItemProps) {
   return (
-    <div className="w-full py-4">
+    <div className="w-full md:py-4">
       {/* Desktop view header - hidden on mobile */}
       <table className="w-full border-separate border-spacing-y-3">
         <thead className="bg-main hidden md:table-header-group">

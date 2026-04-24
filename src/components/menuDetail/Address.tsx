@@ -144,7 +144,13 @@ function Address() {
             disabled={isCreating}
             className="bg-main-btn hover:bg-main-btn-hover flex-1 rounded-2xl py-4 text-sm font-black tracking-widest text-white uppercase shadow-[0_10px_20px_rgba(110,2,111,0.2)] transition-all active:scale-95"
           >
-            {isCreating ? <Spinner /> : "Confirm & Order Now 🍔"}
+            {isCreating ? (
+              <Spinner />
+            ) : (
+              <p>
+                <span className="hidden sm:inline">Confirm &</span> Order Now 🍔
+              </p>
+            )}
           </Button>
         </div>
       </div>

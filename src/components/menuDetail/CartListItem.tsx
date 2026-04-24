@@ -34,26 +34,28 @@ function CartListItem({
   return (
     <li className="border-main/20 flex items-center justify-between gap-4 border-b py-3 transition-all last:border-0">
       {/* Product Image Section */}
-      <div className="border-main/10 h-16 w-16 shrink-0 overflow-hidden rounded-xl border shadow-sm">
-        <img
-          className="h-full w-full object-cover"
-          src={image || noImg}
-          alt={title}
-        />
-      </div>
+      <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4">
+        <div className="border-main/10 h-16 w-16 shrink-0 overflow-hidden rounded-xl border shadow-sm">
+          <img
+            className="h-full w-full object-cover"
+            src={image || noImg}
+            alt={title}
+          />
+        </div>
 
-      {/* Product Title Section */}
-      <div className="min-w-0 flex-1">
-        <p className="text-text-dark truncate text-sm font-bold capitalize md:text-base">
-          {title}
-        </p>
-        <p className="text-main-dark text-xs font-medium">
-          {formatPrice(price)} / unit
-        </p>
+        {/* Product Title Section */}
+        <div className="min-w-0 flex-1">
+          <p className="text-text-dark truncate text-sm font-bold capitalize md:text-base">
+            {title}
+          </p>
+          <p className="text-main-dark text-xs font-medium">
+            {formatPrice(price)} / unit
+          </p>
+        </div>
       </div>
 
       {/* Controls and Price Section */}
-      <div className="flex items-center gap-4 md:gap-8">
+      <div className="flex flex-col-reverse items-center gap-2 sm:flex-row md:gap-8">
         {/* Quantity Controls */}
         <div className="bg-main-light border-main/20 flex items-center rounded-full border p-1">
           {cart.activeCart === 0 && iconVisible && (

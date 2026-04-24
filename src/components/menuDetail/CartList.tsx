@@ -23,7 +23,7 @@ function CartList() {
         ))}
       </ul>
 
-      <div className="border-main-dark/30 mt-6 flex items-end justify-between border-t border-dashed px-2 pt-4">
+      <div className="border-main-dark/30 mt-6 flex items-end justify-between border-t border-dashed pt-4">
         <span className="text-main-dark text-sm font-bold tracking-widest uppercase">
           Total Amount
         </span>
@@ -49,7 +49,7 @@ function CartList() {
             onClick={() => setActiveCart(1)}
             className="bg-main-btn hover:bg-main-btn-hover flex-1 rounded-xl py-4 text-sm font-black tracking-widest text-white uppercase shadow-[0_10px_20px_rgba(110,2,111,0.2)] transition-all active:scale-95 md:text-base"
           >
-            Continue to Checkout
+            Continue <span className="hidden sm:inline">to Checkout</span>
           </Button>
         </div>
       )}

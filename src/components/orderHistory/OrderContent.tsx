@@ -7,7 +7,7 @@ type OrderContentProps = {
 
 function OrderContent({ data }: OrderContentProps) {
   return (
-    <div className="container-box md:0 mt-25 px-4 py-10 md:mt-0">
+    <div className="container-box px-4 py-10">
       {/* Header Section */}
       <div className="mb-10">
         <h2 className="text-main-btn text-3xl font-black tracking-tighter uppercase italic md:text-4xl">

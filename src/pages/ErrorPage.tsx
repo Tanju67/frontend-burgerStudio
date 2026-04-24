@@ -11,9 +11,7 @@ import MainNav from "../shared/UIElements/Navigation/MainNav";
 function ErrorPage() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const routeError = useRouteError(); // React Router'ın fırlattığı hata
-
-  console.log(routeError);
+  const routeError = useRouteError();
 
   let status = searchParams.get("status");
   let message = searchParams.get("message");

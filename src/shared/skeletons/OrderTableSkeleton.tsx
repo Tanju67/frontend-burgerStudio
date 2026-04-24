@@ -4,7 +4,7 @@ function OrderTableSkeleton({ count = 5 }: { count?: number }) {
   const skeletonItems = Array.from({ length: count });
 
   return (
-    <div className="w-full animate-pulse py-4">
+    <div className="w-full animate-pulse md:py-4">
       <table className="w-full border-separate border-spacing-y-3">
         {/* Desktop Header Skeleton */}
         <thead className="hidden md:table-header-group">

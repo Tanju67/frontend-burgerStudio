@@ -190,9 +190,9 @@ function Item({ _id, title, image, description, price, menu }: Product) {
             onClick={() => openProductModal({ _id, title, description, price })}
             className="bg-main-btn flex-1 rounded-xl p-2 text-white transition-all hover:scale-105 active:scale-95"
           >
-            <span className="flex items-center justify-center gap-2 font-black tracking-tighter uppercase italic">
+            <span className="flex items-center justify-center gap-1 font-black tracking-tighter uppercase italic sm:gap-2">
               <FaEdit size={18} />
-              <span>Delete</span>
+              <span>Update</span>
             </span>
           </Button>
           <Button
@@ -203,7 +203,7 @@ function Item({ _id, title, image, description, price, menu }: Product) {
             {isLoading ? (
               <Spinner />
             ) : (
-              <span className="flex items-center justify-center gap-2 font-black tracking-tighter uppercase italic">
+              <span className="flex items-center justify-center gap-1 font-black tracking-tighter uppercase italic sm:gap-2">
                 <MdDeleteForever size={18} />
                 <span>Delete</span>
               </span>

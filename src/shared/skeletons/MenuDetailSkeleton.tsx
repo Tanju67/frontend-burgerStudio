@@ -37,7 +37,7 @@ function MenuDetailSkeleton({ count = 6 }: MenuDetailSkeletonProps) {
   );
 
   return (
-    <div className="container-box mt-28 grid gap-4 py-4 sm:grid-cols-2 md:mt-0 md:min-h-[50vh] lg:grid-cols-3">
+    <div className="container-box grid gap-4 py-4 sm:grid-cols-2 md:min-h-[50vh] lg:grid-cols-3">
       {Array.from({ length: count }).map((_, index) => (
         <SkeletonCard key={index} />
       ))}

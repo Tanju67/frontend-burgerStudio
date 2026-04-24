@@ -10,7 +10,7 @@ function Sidebar() {
   const { darkMode } = useDarkMode();
 
   return (
-    <aside className="bg-main border-main/10 fixed top-18 right-2 left-2 z-50 flex h-14 items-center rounded-2xl border py-4 shadow-lg transition-all duration-300 sm:static sm:mt-22 sm:h-auto md:col-span-2 md:mt-0 md:flex-col md:py-10 md:shadow-none lg:col-span-1">
+    <aside className="bg-main border-main/10 fixed top-18 right-2 left-2 z-100 flex h-14 items-center rounded-2xl border py-4 shadow-lg transition-all duration-300 sm:h-auto md:static md:z-50 md:col-span-2 md:mt-0 md:flex-col md:py-10 md:shadow-none lg:col-span-1">
       {/* Logo Section - Only Desktop */}
       <div className="mb-12 hidden px-6 md:block">
         <Link to="/">

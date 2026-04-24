@@ -2,7 +2,7 @@ function MenuSkeleton() {
   const skeletons = Array.from({ length: 6 });
 
   return (
-    <div className="container-box mt-28 grid grid-cols-1 gap-4 py-4 md:mt-0 md:grid-cols-2">
+    <div className="container-box grid grid-cols-1 gap-4 py-4 md:grid-cols-2">
       {skeletons.map((_, index) => (
         <div
           key={index}

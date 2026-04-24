@@ -24,6 +24,7 @@ export const orderApi = baseApi.injectEndpoints({
           console.error("Zod Validation Error:", result.error.format());
           return [];
         }
+
         return result.data;
       },
 
@@ -60,9 +61,7 @@ export const orderApi = baseApi.injectEndpoints({
         method: "GET",
       }),
       transformResponse: (response: { data: unknown }) => {
-        console.log(response);
         const result = orderSchema.array().safeParse(response.data);
-        console.log(result, "result");
 
         if (!result.success) {
           console.error("Zod Validation Error:", result.error.format());

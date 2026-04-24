@@ -6,7 +6,7 @@ import useDarkMode from "../../shared/hooks/useDarkMode";
 function AdminNav() {
   const { darkMode, toggleDarkMode } = useDarkMode();
   return (
-    <nav className="fixed top-0 right-0 left-0 z-90 px-2 pt-2">
+    <nav className="fixed top-0 right-0 left-0 z-90 h-34 px-2 pt-2 backdrop-blur-2xl sm:h-40 md:h-auto md:pb-2">
       <div className="bg-main/90 text-main-dark flex h-14 items-center rounded-2xl border border-white/20 px-4 shadow-lg backdrop-blur-md">
         {/* Back Button */}
         <NavLink

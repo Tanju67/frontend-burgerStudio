@@ -3,7 +3,7 @@ import homeImg3 from "../../assets/homeImg3.jpg";
 
 function AboutUs() {
   return (
-    <div className="container-box space-y-32 py-24">
+    <div className="container-box space-y-16 py-12 sm:py-18 md:space-y-32 md:py-24">
       {/* First Section: Ingredients */}
       <div className="grid items-center gap-16 md:grid-cols-2">
         <div className="group relative">
